@@ -6,25 +6,30 @@ import Icon from "@mdi/react"
 import {mdiKeyVariant} from "@mdi/js"
 
 import './App.css';
+import './styles/utils.css'
 import {Link} from "react-router-dom";
 
 class App extends Component {
     render() {
         return (
-            <div>
+            <div className="appWrapper" id="App">
                 <Navbar color="light" light expand="md">
-                    <NavbarBrand><Link to="/"><img alt="logo my-TreasureHunt"
-                                                   src="https://my-treasurehunt.com/assets/images/logositethmaj2017-430x90.jpg"/></Link></NavbarBrand>
+                    <NavbarBrand style={{paddingLeft: "5em"}}><Link to="/">
+                        <img alt="logo my-TreasureHunt"
+                             src="https://my-treasurehunt.com/assets/images/logositethmaj2017-430x90.jpg"
+                             style={{maxHeight: "50px", margin: "none"}}/>
+                    </Link></NavbarBrand>
                     <NavbarToggler/>
-                    <Collapse navbar>
+                    <Collapse navbar style={{paddingRight: "5em"}}>
                         <Nav className="ml-auto" navbar>
-                            <Icon path={mdiKeyVariant} size={1}/><NavLink href="login">Login</NavLink>
+                            <NavLink href="login">Login</NavLink>
                         </Nav>
                     </Collapse>
                 </Navbar>
                 <Routes/>
-            </div>);
+            </div>
+    );
     }
-}
+    }
 
-export default App;
+    export default App;
