@@ -1,0 +1,13 @@
+.test_text {
+    padding: 80px 0;
+    text-align: center;
+}
+
+.test_text h1 {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+}
+
+.test_text p {
+    color: #999;
+}
