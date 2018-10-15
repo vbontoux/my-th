@@ -21,15 +21,15 @@ class App extends Component {
                     </Link></NavbarBrand>
                     <NavbarToggler/>
                     <Collapse navbar style={{paddingRight: "5em"}}>
-                        <Nav className="ml-auto" navbar>
-                            <NavLink href="login">Login</NavLink>
+                        <Nav className="ml-auto main-navbar" navbar>
+                            <NavLink href="login"><Icon path={mdiKeyVariant} size={1}/> Login</NavLink>
                         </Nav>
                     </Collapse>
                 </Navbar>
                 <Routes/>
             </div>
-    );
+        );
     }
-    }
+}
 
-    export default App;
+export default App;

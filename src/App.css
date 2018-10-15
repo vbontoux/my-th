@@ -1,13 +1,27 @@
-a.nav-link {
-    transition: color .2s ease-in-out;
-    color: #98be5d !important;
+.main-navbar {
+    color: #98be5d;
     font-family: 'Rubik', sans-serif;
     font-size: 1rem;
     font-weight: bold;
+    fill: rgba(72, 95, 47, 0.2);
+    transition: background-color .2s ease-in-out;
 }
 
-a.nav-link:hover {
+.main-navbar:hover {
     color: #999999 !important;
+    fill: #999999 !important;
+}
+
+.main-navbar svg {
+    transition: fill .2s ease-in-out;
+}
+
+.main-navbar a {
+    transition: color .2s ease-in-out;
+}
+
+.main-navbar .nav-link {
+    color: inherit !important;
 }
 
 .navbar .navbar-brand{
