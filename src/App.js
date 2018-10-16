@@ -1,21 +1,12 @@
 import React, {Component} from 'react';
 import Routes from './Routes'
 
-import {
-    Collapse,
-    Nav,
-    Navbar,
-    NavbarBrand,
-    NavbarToggler,
-    NavItem,
-    Popover,
-    PopoverBody,
-    PopoverHeader
-} from 'reactstrap'
+import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler} from 'reactstrap'
 
-import LoginForm from './components/loginForm.js'
 import './App.css';
 import './styles/utils.css'
+import './components/LoginNavbarEntry'
+import LoginNavbarManager from "./components/LoginNavbarManager";
 
 class App extends Component {
     constructor(props) {
@@ -23,16 +14,26 @@ class App extends Component {
 
         this.toggleLoginPopover = this.toggleLoginPopover.bind(this);
         this.state = {
-            loginPopoverOpen: false
+            loginPopoverOpen: false,
+            isAuthenticated: false
         };
     }
+
+    userHasAuthenticated = authenticated => {
+        console.log("[MTH] User Auth: " + authenticated);
+        this.setState({isAuthenticated: authenticated});
+    };
 
     toggleLoginPopover() {
         this.setState({
             loginPopoverOpen: !this.state.loginPopoverOpen
-        });    }
+        });
+    }
 
     render() {
+        const childProps = {
+            isAuthenticated: this.state.isAuthenticated,
+        };
         return (
             <div className="appWrapper" id="App">
                 <Navbar color="light" light expand="md">
@@ -44,18 +45,11 @@ class App extends Component {
                     <NavbarToggler/>
                     <Collapse navbar style={{paddingRight: "5em"}}>
                         <Nav className="ml-auto main-navbar" navbar>
-                            <NavItem id="loginPopoverButton1" onClick={this.toggleLoginPopover}>
-                                Login
-                            </NavItem>
+                            <LoginNavbarManager authManager={this.userHasAuthenticated} isAuthenticated={this.state.isAuthenticated}/>
                         </Nav>
                     </Collapse>
                 </Navbar>
-                <Popover target={"loginPopoverButton1"} placement="bottom" isOpen={this.state.loginPopoverOpen}
-                         toggle={this.toggleLoginPopover}>
-                    <PopoverHeader>Login</PopoverHeader>
-                    <PopoverBody><LoginForm/></PopoverBody>
-                </Popover>
-                <Routes/>
+                <Routes childProps={childProps}/>
             </div>
         );
     }
