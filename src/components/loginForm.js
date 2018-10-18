@@ -1,6 +1,6 @@
 import React from "react"
 
-import {Row, Button} from "reactstrap"
+import {Button} from "reactstrap"
 import {Icon} from "@mdi/react"
 import {mdiFacebook} from "@mdi/js"
 import {FacebookProvider, Login} from 'react-facebook-sdk'

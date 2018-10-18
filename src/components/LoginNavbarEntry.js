@@ -1,8 +1,7 @@
 import React from "react";
-import {NavItem} from "reactstrap";
+import {NavItem, NavLink} from "reactstrap";
 import {Popover, PopoverHeader, PopoverBody} from "reactstrap";
 import LoginForm from "./loginForm";
-
 
 export default class LoginNavbarEntry extends React.Component {
 
@@ -26,16 +25,14 @@ export default class LoginNavbarEntry extends React.Component {
     };
 
     render() {
-        return (
-            <div id="loginNavbarEntry">
-                <NavItem id="loginPopoverNavbarButton" onClick={this.toggleLoginPopover.bind(this)}>
-                    Login
-                </NavItem>
-                <Popover target="loginPopoverNavbarButton" placement="bottom" isOpen={this.state.loginPopoverOpen}>
-                    <PopoverHeader> Login </PopoverHeader>
-                    <PopoverBody><LoginForm onLogin={this.onLogin}/></PopoverBody>
-                </Popover>
-            </div>
-        );
+        return ([
+            <NavItem>
+                <NavLink id="loginPopoverLink" onClick={this.toggleLoginPopover.bind(this)}>Login</NavLink>
+            </NavItem>,
+            <Popover target="loginPopoverLink" placement="bottom" isOpen={this.state.loginPopoverOpen}>
+                <PopoverHeader> Login </PopoverHeader>
+                <PopoverBody><LoginForm onLogin={this.onLogin}/></PopoverBody>
+            </Popover>
+        ]);
     }
 }

@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import Routes from './Routes'
 import {Auth} from 'aws-amplify'
-import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler} from 'reactstrap'
+import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from 'reactstrap'
+
+import AccountNavbarEntry from "./components/AccountNavbarEntry";
+import LoginNavbarEntry from "./components/LoginNavbarEntry";
 
 import './App.css';
 import './styles/utils.css'
-import './components/LoginNavbarEntry'
-import LoginNavbarManager from "./components/LoginNavbarManager";
+import './styles/loginPopoverStyle.css'
 
 export const UserContext = React.createContext(null);
 
@@ -25,7 +27,7 @@ class App extends Component {
     async componentDidMount() {
         try {
             await Auth.currentAuthenticatedUser().then(user => {
-                this.userHasAuthenticated(user)
+                this.authenticateUser(user)
             });
         }
         catch (e) {
@@ -36,7 +38,7 @@ class App extends Component {
         this.setState({isAuthenticating: false})
     }
 
-    userHasAuthenticated = authenticated => {
+    authenticateUser = authenticated => {
         //TODO Sanitize input
         if (authenticated) {
             this.setState({user: {isAuthenticated: true, ...authenticated}});
@@ -50,7 +52,7 @@ class App extends Component {
         console.log("[MTH] User logout.");
         await Auth.signOut()
             .then(() => {
-                this.userHasAuthenticated(null);
+                this.authenticateUser(null);
             })
             .catch(e => {
                 console.error(e);
@@ -80,12 +82,12 @@ class App extends Component {
                     <NavbarToggler/>
                     <Collapse navbar style={{paddingRight: "5em"}}>
                         <Nav className="ml-auto main-navbar" navbar>
-                            <UserContext.Provider value={this.state.user}>
-                                <LoginNavbarManager authManager={this.userHasAuthenticated}
-                                                    onLogout={this.logoutHandler}
-                                                    isAuthenticated={this.state.isAuthenticated}
-                                                    user={this.state.user}/>
-                            </UserContext.Provider>
+                            <NavItem><NavLink>Test</NavLink></NavItem>
+                            {this.state.user.isAuthenticated ?
+                                <AccountNavbarEntry onLogout={this.logoutHandler} user={this.state.user}/>
+                                :
+                                <LoginNavbarEntry onLogin={this.authenticateUser}/>
+                            }
                         </Nav>
                     </Collapse>
                 </Navbar>
