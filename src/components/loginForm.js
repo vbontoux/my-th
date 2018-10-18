@@ -24,11 +24,19 @@ export default class LoginForm extends React.Component {
         Auth.federatedSignIn("facebook", {
             token: data.tokenDetail.accessToken,
             expires_at: data.tokenDetail.expiresIn
-        }, {email: data.profile.email}).then(credentials => {
+        }, {
+            email: data.profile.email,
+            username: data.profile.name,
+            last_name: data.profile.last_name,
+            first_name: data.profile.first_name,
+            avatar:  "https://graph.facebook.com/v3.1/" + data.profile.id + "/picture"
+        }).then(credentials => {
             console.log("[AWS_Cogn] Connection success.");
             console.log(credentials);
             this.setConnecting();
-            this.state.onLogin(true);
+            Auth.currentAuthenticatedUser().then(user => {
+                this.state.onLogin(user)
+            });
         }).catch(e => {
             console.log("[AWS_Cogn] " + e);
             this.setConnecting()
@@ -64,7 +72,11 @@ export default class LoginForm extends React.Component {
                     <FacebookProvider appId="587504355016303">
                         <Login scope="email" onResponse={this.handleResponse} onError={this.handleError}
                                render={({isLoading, isWorking, onClick}) => (
-                                   <Button color="primary" style={{width: '90%', margin: "0 auto"}} onClick={(...args) => {this.setConnecting(true);onClick(...args)}}>{icon}</Button>
+                                   <Button outline color="primary" className="widePopoverButton facebookButton"
+                                           onClick={(...args) => {
+                                               this.setConnecting(true);
+                                               onClick(...args)
+                                           }}>{icon}</Button>
                                )}>
                         </Login>
                     </FacebookProvider>

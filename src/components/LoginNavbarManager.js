@@ -2,6 +2,8 @@ import React from "react";
 import AccountNavbarEntry from './AccountNavbarEntry'
 import LoginNavbarEntry from './LoginNavbarEntry'
 
+import "../styles/loginPopoverStyle.css"
+
 export default class LoginNavbarManager extends React.Component {
 
     toggleLoginPopover() {
@@ -11,10 +13,9 @@ export default class LoginNavbarManager extends React.Component {
     }
 
     render() {
-        if (this.props.isAuthenticated) {
-            return (<AccountNavbarEntry onLogout={this.props.authManager}/>);
-        } else {
+        if (this.props.user.isAuthenticated)
+            return (<AccountNavbarEntry onLogout={this.props.onLogout} user={this.props.user}/>);
+        else
             return (<LoginNavbarEntry onLogin={this.props.authManager}/>);
-        }
     }
 }

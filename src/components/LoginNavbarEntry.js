@@ -3,6 +3,7 @@ import {NavItem} from "reactstrap";
 import {Popover, PopoverHeader, PopoverBody} from "reactstrap";
 import LoginForm from "./loginForm";
 
+
 export default class LoginNavbarEntry extends React.Component {
 
     constructor(props) {
@@ -34,7 +35,6 @@ export default class LoginNavbarEntry extends React.Component {
                     <PopoverHeader> Login </PopoverHeader>
                     <PopoverBody><LoginForm onLogin={this.onLogin}/></PopoverBody>
                 </Popover>
-
             </div>
         );
     }

@@ -5,3 +5,7 @@
 .bold {
     font-weight: bold;
 }
+
+img.rounded {
+    border-radius: 50%;
+}
