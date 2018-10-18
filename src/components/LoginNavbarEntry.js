@@ -25,14 +25,16 @@ export default class LoginNavbarEntry extends React.Component {
     };
 
     render() {
-        return ([
+        return (
+            <div>
             <NavItem>
                 <NavLink id="loginPopoverLink" onClick={this.toggleLoginPopover.bind(this)}>Login</NavLink>
-            </NavItem>,
+            </NavItem>
             <Popover target="loginPopoverLink" placement="bottom" isOpen={this.state.loginPopoverOpen}>
                 <PopoverHeader> Login </PopoverHeader>
                 <PopoverBody><LoginForm onLogin={this.onLogin}/></PopoverBody>
             </Popover>
-        ]);
+            </div>
+        );
     }
 }

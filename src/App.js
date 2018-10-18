@@ -20,7 +20,8 @@ class App extends Component {
         this.state = {
             loginPopoverOpen: false,
             user: {isAuthenticated: false},
-            isAuthenticating: true
+            isAuthenticating: true,
+            openedSidenav: false
         };
     }
 
@@ -74,15 +75,17 @@ class App extends Component {
             !this.state.isAuthenticating &&
             <div className="appWrapper" id="App">
                 <Navbar color="light" light expand="md">
-                    <NavbarBrand style={{paddingLeft: "5em"}} href="/">
+                    <NavbarBrand href="/">
                         <img alt="logo my-TreasureHunt"
                              src="https://my-treasurehunt.com/assets/images/logositethmaj2017-430x90.jpg"
                              style={{maxHeight: "50px", margin: "none"}}/>
                     </NavbarBrand>
-                    <NavbarToggler/>
-                    <Collapse navbar style={{paddingRight: "5em"}}>
+                    <NavbarToggler onClick={() => {
+                        this.setState({openedSidenav: !this.state.openedSidenav});}}/>
+                    <Collapse navbar style={{paddingRight: "5em"}} isOpen={this.state.openedSidenav}>
                         <Nav className="ml-auto main-navbar" navbar>
-                            <NavItem><NavLink>Test</NavLink></NavItem>
+                            <NavItem><NavLink href="TODO">About us</NavLink></NavItem>
+                            <NavItem><NavLink href="TODO">Manage my campaigns</NavLink></NavItem>
                             {this.state.user.isAuthenticated ?
                                 <AccountNavbarEntry onLogout={this.logoutHandler} user={this.state.user}/>
                                 :
