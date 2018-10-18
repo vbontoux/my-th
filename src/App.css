@@ -7,6 +7,17 @@
     display: flex!important;
     margin-right: 2em;
     text-align: left;
+    transition: 0.5s !important;
+    transition-delay: 1s;
+}
+
+.main-navbar .nav-item.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+nav {
+    transition: height 0.5s;
 }
 
 .main-navbar a {

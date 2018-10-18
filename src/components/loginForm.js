@@ -29,7 +29,7 @@ export default class LoginForm extends React.Component {
             username: data.profile.name,
             last_name: data.profile.last_name,
             first_name: data.profile.first_name,
-            avatar:  "https://graph.facebook.com/v3.1/" + data.profile.id + "/picture"
+            avatar:  'https://graph.facebook.com/v3.1/' + data.profile.id + '/picture'
         }).then(credentials => {
             console.log("[AWS_Cogn] Connection success.");
             console.log(credentials);

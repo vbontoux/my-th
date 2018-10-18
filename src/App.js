@@ -28,7 +28,7 @@ class App extends Component {
     async componentDidMount() {
         try {
             await Auth.currentAuthenticatedUser().then(user => {
-                this.authenticateUser(user)
+                this.authenticateUser(user);
             });
         }
         catch (e) {
@@ -81,7 +81,8 @@ class App extends Component {
                              style={{maxHeight: "50px", margin: "none"}}/>
                     </NavbarBrand>
                     <NavbarToggler onClick={() => {
-                        this.setState({openedSidenav: !this.state.openedSidenav});}}/>
+                        this.setState({openedSidenav: !this.state.openedSidenav});
+                    }}/>
                     <Collapse navbar style={{paddingRight: "5em"}} isOpen={this.state.openedSidenav}>
                         <Nav className="ml-auto main-navbar" navbar>
                             <NavItem><NavLink href="TODO">About us</NavLink></NavItem>
@@ -94,7 +95,9 @@ class App extends Component {
                         </Nav>
                     </Collapse>
                 </Navbar>
-                <Routes childProps={childProps}/>
+                <UserContext.Provider>
+                    <Routes childProps={childProps}/>
+                </UserContext.Provider>
             </div>
         );
     }
