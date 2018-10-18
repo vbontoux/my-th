@@ -86,7 +86,7 @@ class App extends Component {
                     <Collapse navbar style={{paddingRight: "5em"}} isOpen={this.state.openedSidenav}>
                         <Nav className="ml-auto main-navbar" navbar>
                             <NavItem><NavLink href="TODO">About us</NavLink></NavItem>
-                            <NavItem><NavLink href="TODO">Manage my campaigns</NavLink></NavItem>
+                            <NavItem><NavLink href="manage">Manage my campaigns</NavLink></NavItem>
                             {this.state.user.isAuthenticated ?
                                 <AccountNavbarEntry onLogout={this.logoutHandler} user={this.state.user}/>
                                 :
