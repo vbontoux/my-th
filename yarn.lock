@@ -6144,6 +6144,11 @@ loader-utils@1.1.0, loader-utils@^1.0.1, loader-utils@^1.0.2, loader-utils@^1.1.
     emojis-list "^2.0.0"
     json5 "^0.5.0"
 
+loaders.css@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/loaders.css/-/loaders.css-0.1.2.tgz#3a9fb43726c73334a38142af9d0629019b658743"
+  integrity sha1-Op+0NybHMzSjgUKvnQYpAZtlh0M=
+
 locate-path@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-2.0.0.tgz#2b568b265eec944c6d9c0de9c3dbbbca0354cd8e"
@@ -6453,6 +6458,11 @@ mini-css-extract-plugin@0.4.3:
     loader-utils "^1.1.0"
     schema-utils "^1.0.0"
     webpack-sources "^1.1.0"
+
+minify-css-string@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/minify-css-string/-/minify-css-string-1.0.0.tgz#201bd949271e19f6e0af0a1dc0ccc583de47c630"
+  integrity sha1-IBvZSSceGfbgrwodwMzFg95HxjA=
 
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
@@ -8282,10 +8292,24 @@ react-facebook-sdk@^1.1.1:
     prop-types "^15.6.0"
     react-spinner-children "^1.0.8"
 
+react-fade@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-fade/-/react-fade-1.1.1.tgz#41f11ba8da671d2ac045f213eac3c1b314fc58fe"
+  integrity sha1-QfEbqNpnHSrARfIT6sPBsxT8WP4=
+  dependencies:
+    minify-css-string "^1.0.0"
+
 react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
+react-loaders@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-loaders/-/react-loaders-3.0.1.tgz#963ad7adefe530b24b1ed13faf4645134cf09a0e"
+  integrity sha512-4igMNqs9Fb3d4Z+0UHIGQNJsw/37gX0nUO8QxupnEKRn1dtyYC1LGwk5GuaoDciMQCQc/MmPwb4Fn6ZfdoX1FQ==
+  dependencies:
+    classnames "^2.2.3"
 
 react-popper@^0.10.4:
   version "0.10.4"

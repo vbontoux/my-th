@@ -57,30 +57,27 @@ export default class LoginForm extends React.Component {
 
     render() {
         let icon = <Icon path={mdiFacebook}
-                         size={1}
-                         color="#fff"/>;
+                         size={1}/>;
         if (this.state.connecting) {
             icon = <PulseLoader
                 sizeUnit={"em"}
                 size={0.4}
-                color={'#ffffff'}
+                color={'#999999'}
                 loading={true}/>
         }
         return (
             <div id="loginForm">
-                <Row style={{minWidth: "200px"}}>
                     <FacebookProvider appId="587504355016303">
                         <Login scope="email" onResponse={this.handleResponse} onError={this.handleError}
                                render={({isLoading, isWorking, onClick}) => (
-                                   <Button outline color="primary" className="widePopoverButton facebookButton"
+                                   <Button outline color="primary" className="facebookButton" block
                                            onClick={(...args) => {
                                                this.setConnecting(true);
                                                onClick(...args)
-                                           }}>{icon}</Button>
+                                           }} disabled={this.state.connecting}>{icon}</Button>
                                )}>
                         </Login>
                     </FacebookProvider>
-                </Row>
             </div>
         );
     }

@@ -2,6 +2,10 @@ import React from "react";
 import {NavItem, Button} from "reactstrap";
 import {PulseLoader} from 'react-spinners'
 import {Popover, PopoverHeader, PopoverBody} from "reactstrap";
+import {Icon} from '@mdi/react'
+import {mdiExitRun} from '@mdi/js'
+
+import '../styles/utils.css'
 
 export default class LoginNavbarEntry extends React.Component {
 
@@ -27,6 +31,12 @@ export default class LoginNavbarEntry extends React.Component {
 
     render() {
 
+        let icon = ["Log out", <Icon path={mdiExitRun} size={1} color={"#fff"} className={'right-icon'} />];
+        if (this.state.loggingOut)
+        icon = <PulseLoader
+            sizeUnit={"em"}
+            size={0.4}
+            loading={true} className="spinner"/>;
 
         return (
             <div id="accountNavbarEntry">
@@ -34,13 +44,8 @@ export default class LoginNavbarEntry extends React.Component {
                     <img src={this.props.user.avatar} alt="avatar" className="avatarImage"/>{this.props.user.username}
                 </NavItem>
                 <Popover target="loginPopoverNavbarButton" placement="bottom" isOpen={this.state.loginPopoverOpen}>
-                    <PopoverHeader> My account </PopoverHeader>
-                    <PopoverBody style={{minWidth: "200px"}}>
-                        <Button onClick={this.logOut.bind(this)} className="widePopoverButton" style={{width: "100%"}}>Log out<PulseLoader
-                            sizeUnit={"em"}
-                            size={0.4}
-                            color={'#ffffff'}
-                            loading={this.state.loggingOut}/></Button>
+                    <PopoverBody>
+                        <Button onClick={this.logOut.bind(this)} className="logoutBtn" block>{icon}</Button>
                     </PopoverBody>
                 </Popover>
 
