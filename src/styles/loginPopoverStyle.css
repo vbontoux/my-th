@@ -1,0 +1,36 @@
+.widePopoverButton {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.facebookButton {
+    background-color: #3b5998 !important;
+    color: white;
+    border-color: transparent;
+}
+
+.facebookButton:hover {
+    background-color: #8b9dc3 !important;
+    border-color: transparent;
+}
+
+.btn:disabled {
+    background-color: #eeeeee !important;
+    border-color: #999999;
+}
+
+.facebookButton {
+    background-color: #8b9dc3;
+    border-color: transparent;
+}
+
+img.avatarImage {
+    border-radius: 50%;
+    height: 90%;
+    margin-right: 0.5em ;
+}
+
+.popover {
+    transition: opacity 0.2s;
+    min-width: 200px;
+}

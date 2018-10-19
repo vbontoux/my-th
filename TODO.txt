@@ -1,0 +1,13 @@
+Campaigns Management:
+    Front End :
+        Cleaning CSS
+
+    API:
+        Campaign creation
+        Campaign information retrieving
+
+Security:
+    Sanitise user inputs
+
+Connection:
+    Fix CORS error

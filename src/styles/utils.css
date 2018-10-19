@@ -1,0 +1,31 @@
+.text-important {
+    color: #98be5d !important;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+img.rounded {
+    border-radius: 50%;
+}
+
+button svg.right-icon {
+    position: absolute;
+    right: 1em;
+    vertical-align: middle !important;
+}
+
+button svg path {
+    fill: currentColor !important;
+}
+
+button div.spinner div {
+    background-color: currentColor !important;
+}
+
+.logoutBtn {
+    width: 100%;
+    color: #ffffff;
+    background-color: #98be5d;
+}
