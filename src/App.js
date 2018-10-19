@@ -5,6 +5,7 @@ import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} fro
 
 import AccountNavbarEntry from "./components/AccountNavbarEntry";
 import LoginNavbarEntry from "./components/LoginNavbarEntry";
+import LoginForm from "./components/loginForm";
 
 import './App.css';
 import './styles/utils.css'
@@ -26,10 +27,28 @@ class App extends Component {
     }
 
     async componentDidMount() {
-        try {
-            await Auth.currentAuthenticatedUser().then(user => {
-                this.authenticateUser(user);
+        window.fbAsyncInit = function() {
+            window.FB.init({
+                appId: '587504355016303',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v3.1'
             });
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v3.1&appId=1961972997413886&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        try {
+            if (!this.state.user.isAuthenticated)
+                await Auth.currentAuthenticatedUser().then(user => {
+                    this.authenticateUser(user);
+                });
         }
         catch (e) {
             if (e) {
@@ -43,7 +62,8 @@ class App extends Component {
         //TODO Sanitize input
         if (authenticated) {
             this.setState({user: {isAuthenticated: true, ...authenticated}});
-            console.log("[MTH] User Auth: " + JSON.stringify(this.state.user));
+            console.log("[MTH] User Auth: ");
+            console.log(authenticated);
         }
         else
             this.setState({user: {isAuthenticated: false}})
@@ -60,7 +80,6 @@ class App extends Component {
             });
     };
 
-
     toggleLoginPopover() {
         this.setState({
             loginPopoverOpen: !this.state.loginPopoverOpen
@@ -72,33 +91,33 @@ class App extends Component {
             isAuthenticated: this.state.isAuthenticated,
         };
         return (
-            !this.state.isAuthenticating &&
-            <div className="appWrapper" id="App">
-                <Navbar color="light" light expand="md">
-                    <NavbarBrand href="/">
-                        <img alt="logo my-TreasureHunt"
-                             src="https://my-treasurehunt.com/assets/images/logositethmaj2017-430x90.jpg"
-                             style={{maxHeight: "50px", margin: "none"}}/>
-                    </NavbarBrand>
-                    <NavbarToggler onClick={() => {
-                        this.setState({openedSidenav: !this.state.openedSidenav});
-                    }}/>
-                    <Collapse navbar style={{paddingRight: "5em"}} isOpen={this.state.openedSidenav}>
-                        <Nav className="ml-auto main-navbar" navbar>
-                            <NavItem><NavLink href="TODO">About us</NavLink></NavItem>
-                            <NavItem><NavLink href="manage">Manage my campaigns</NavLink></NavItem>
-                            {this.state.user.isAuthenticated ?
-                                <AccountNavbarEntry onLogout={this.logoutHandler} user={this.state.user}/>
-                                :
-                                <LoginNavbarEntry onLogin={this.authenticateUser}/>
-                            }
-                        </Nav>
-                    </Collapse>
-                </Navbar>
-                <UserContext.Provider>
-                    <Routes childProps={childProps}/>
-                </UserContext.Provider>
-            </div>
+                !this.state.isAuthenticating &&
+                <div className="appWrapper" id="App">
+                    <Navbar color="light" light expand="md">
+                        <NavbarBrand href="/">
+                            <img alt="logo my-TreasureHunt"
+                                 src="https://my-treasurehunt.com/assets/images/logositethmaj2017-430x90.jpg"
+                                 style={{maxHeight: "50px", margin: "none"}}/>
+                        </NavbarBrand>
+                        <NavbarToggler onClick={() => {
+                            this.setState({openedSidenav: !this.state.openedSidenav});
+                        }}/>
+                        <Collapse navbar style={{paddingRight: "5em"}} isOpen={this.state.openedSidenav}>
+                            <Nav className="ml-auto main-navbar" navbar>
+                                <NavItem><NavLink href="TODO">About us</NavLink></NavItem>
+                                <NavItem><NavLink href="manage">Manage my campaigns</NavLink></NavItem>
+                                {this.state.user.isAuthenticated ?
+                                    <AccountNavbarEntry onLogout={this.logoutHandler} user={this.state.user}/>
+                                    :
+                                    <LoginNavbarEntry onLogin={this.authenticateUser}/>
+                                }
+                            </Nav>
+                        </Collapse>
+                    </Navbar>
+                    <UserContext.Provider>
+                        <Routes childProps={childProps}/>
+                    </UserContext.Provider>
+                </div>
         );
     }
 }

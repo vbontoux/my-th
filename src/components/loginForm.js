@@ -3,9 +3,9 @@ import React from "react"
 import {Button} from "reactstrap"
 import {Icon} from "@mdi/react"
 import {mdiFacebook} from "@mdi/js"
-import {FacebookProvider, Login} from 'react-facebook-sdk'
 import {Auth} from "aws-amplify";
 import {PulseLoader} from "react-spinners";
+
 
 export default class LoginForm extends React.Component {
 
@@ -14,41 +14,54 @@ export default class LoginForm extends React.Component {
 
         this.state = {
             onLogin: props.onLogin,
+            fbLoading: true,
             connecting: false
         }
-    }
+    };
 
-    handleResponse = (data) => {
-        console.log("[FB] User logged in");
-        console.log(data);
-        Auth.federatedSignIn("facebook", {
-            token: data.tokenDetail.accessToken,
-            expires_at: data.tokenDetail.expiresIn
-        }, {
-            email: data.profile.email,
-            username: data.profile.name,
-            last_name: data.profile.last_name,
-            first_name: data.profile.first_name,
-            avatar:  'https://graph.facebook.com/v3.1/' + data.profile.id + '/picture'
+    FacebookToAWS(tokenData, userData) {
+        console.debug("[DEBUG] MTH - AWS Log in : ");
+        console.log(tokenData, userData);
+        Auth.federatedSignIn("facebook", {...tokenData}, {
+            email: userData.email,
+            username: userData.name,
+            first_name: userData.first_name,
+            last_name: userData.last_name,
+            fbid: userData.id,
+            avatar: "https://graph.facebook.com/v3.1/" + userData.id + "/picture"
         }).then(credentials => {
             console.log("[AWS_Cogn] Connection success.");
             console.log(credentials);
-            this.setConnecting();
+            this.setFacebookLoading();
             Auth.currentAuthenticatedUser().then(user => {
                 this.state.onLogin(user)
             });
         }).catch(e => {
             console.log("[AWS_Cogn] " + e);
-            this.setConnecting()
+            this.setFacebookLoading()
         });
     };
 
+    fbLogin = () => {
+        window.FB.login(r => {
+            if (r.status === "connected") {
+                let tokenData = {token: r.authResponse.accessToken, expires_at: r.authResponse.expiresIn};
+                console.debug("[DEBUG] MTH - Facebook recieved connection", r);
+                window.FB.api('/me', {fields: "email,name,last_name,first_name,id"}, userData => {
+                    this.FacebookToAWS(tokenData, userData);
+                });
+            }
+            else
+                console.debug("MTH - Facebook recieved response", r);
+        }, {fields: "public_profile, email"});
+    }
+
     handleError = (error) => {
         console.log("[FB] " + error);
-        this.setConnecting();
+        this.setFacebookLoading();
     };
 
-    setConnecting(bool = false) {
+    setFacebookLoading(bool = false) {
         console.log(this.state.connecting + " / " + bool);
         this.setState({
             connecting: bool
@@ -67,17 +80,10 @@ export default class LoginForm extends React.Component {
         }
         return (
             <div id="loginForm">
-                    <FacebookProvider appId="587504355016303">
-                        <Login scope="email" onResponse={this.handleResponse} onError={this.handleError}
-                               render={({isLoading, isWorking, onClick}) => (
-                                   <Button outline color="primary" className="facebookButton" block
-                                           onClick={(...args) => {
-                                               this.setConnecting(true);
-                                               onClick(...args)
-                                           }} disabled={this.state.connecting}>{icon}</Button>
-                               )}>
-                        </Login>
-                    </FacebookProvider>
+                <Button color="primary" className="facebookButton" block
+                        disabled={this.state.connecting} onClick={this.fbLogin}>
+                    {icon}
+                </Button>
             </div>
         );
     }

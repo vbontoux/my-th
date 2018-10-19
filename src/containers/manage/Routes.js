@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Route} from "react-router-dom";
 import PropTypes from 'prop-types';
 
 class Routes extends Component {

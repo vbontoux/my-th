@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Routes from "./manage/Routes";
 import {Icon} from '@mdi/react'
 import {mdiPlusCircle} from '@mdi/js'
 
@@ -7,11 +6,6 @@ import '../styles/Manager.css'
 import {Badge, Col, Nav, NavItem, NavLink, Row} from "reactstrap";
 
 class Manage extends Component {
-    constructor(props) {
-        super(props);
-
-    }
-
 
     render() {
         return (
