@@ -28,4 +28,5 @@ button div.spinner div {
     width: 100%;
     color: #ffffff;
     background-color: #98be5d;
+    border-color: transparent;
 }

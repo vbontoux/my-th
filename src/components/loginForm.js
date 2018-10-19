@@ -5,6 +5,7 @@ import {Icon} from "@mdi/react"
 import {mdiFacebook} from "@mdi/js"
 import {Auth} from "aws-amplify";
 import {PulseLoader} from "react-spinners";
+import ButtonSpinable from "./ButtonSpinable";
 
 
 export default class LoginForm extends React.Component {
@@ -14,7 +15,6 @@ export default class LoginForm extends React.Component {
 
         this.state = {
             onLogin: props.onLogin,
-            fbLoading: true,
             connecting: false
         }
     };
@@ -32,17 +32,18 @@ export default class LoginForm extends React.Component {
         }).then(credentials => {
             console.log("[AWS_Cogn] Connection success.");
             console.log(credentials);
-            this.setFacebookLoading();
+            this.setConnecting();
             Auth.currentAuthenticatedUser().then(user => {
                 this.state.onLogin(user)
             });
         }).catch(e => {
             console.log("[AWS_Cogn] " + e);
-            this.setFacebookLoading()
+            this.setConnecting()
         });
     };
 
     fbLogin = () => {
+        this.setConnecting(true);
         window.FB.login(r => {
             if (r.status === "connected") {
                 let tokenData = {token: r.authResponse.accessToken, expires_at: r.authResponse.expiresIn};
@@ -54,14 +55,14 @@ export default class LoginForm extends React.Component {
             else
                 console.debug("MTH - Facebook recieved response", r);
         }, {fields: "public_profile, email"});
-    }
+    };
 
     handleError = (error) => {
         console.log("[FB] " + error);
-        this.setFacebookLoading();
+        this.setConnecting();
     };
 
-    setFacebookLoading(bool = false) {
+    setConnecting(bool = false) {
         console.log(this.state.connecting + " / " + bool);
         this.setState({
             connecting: bool
@@ -69,21 +70,14 @@ export default class LoginForm extends React.Component {
     }
 
     render() {
-        let icon = <Icon path={mdiFacebook}
-                         size={1}/>;
-        if (this.state.connecting) {
-            icon = <PulseLoader
-                sizeUnit={"em"}
-                size={0.4}
-                color={'#999999'}
-                loading={true}/>
-        }
         return (
             <div id="loginForm">
-                <Button color="primary" className="facebookButton" block
-                        disabled={this.state.connecting} onClick={this.fbLogin}>
-                    {icon}
-                </Button>
+                    <ButtonSpinable color="primary" className="facebookButton" block
+                                    loading={this.state.connecting}
+                                    onClick={this.fbLogin}>
+                        <Icon path={mdiFacebook}
+                              size={1}/>
+                    </ButtonSpinable>
             </div>
         );
     }

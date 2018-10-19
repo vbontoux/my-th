@@ -62,15 +62,14 @@ class App extends Component {
         //TODO Sanitize input
         if (authenticated) {
             this.setState({user: {isAuthenticated: true, ...authenticated}});
-            console.log("[MTH] User Auth: ");
-            console.log(authenticated);
+            console.debug("[DEBUG] MTH - AWS Cognito: User authentication", authenticated);
         }
         else
             this.setState({user: {isAuthenticated: false}})
     };
 
     logoutHandler = async () => {
-        console.log("[MTH] User logout.");
+        console.log("[DEBUG] MTH - AWS Cognito: User logout.");
         await Auth.signOut()
             .then(() => {
                 this.authenticateUser(null);

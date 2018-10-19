@@ -6,6 +6,7 @@ import {Icon} from '@mdi/react'
 import {mdiExitRun} from '@mdi/js'
 
 import '../styles/utils.css'
+import ButtonSpinable from "./ButtonSpinable";
 
 export default class LoginNavbarEntry extends React.Component {
 
@@ -30,13 +31,6 @@ export default class LoginNavbarEntry extends React.Component {
     }
 
     render() {
-
-        let icon = <div>Log out <Icon path={mdiExitRun} size={1} color={"#fff"} className={'right-icon'}/></div>;
-        if (this.state.loggingOut)
-            icon = <PulseLoader
-                sizeUnit={"em"}
-                size={0.4}
-                loading={true} className="spinner"/>;
         return (
             <div>
                 <NavItem>
@@ -47,7 +41,10 @@ export default class LoginNavbarEntry extends React.Component {
                 </NavItem>
                 <Popover target="accountNavbarLink" placement="bottom" isOpen={this.state.loginPopoverOpen}>
                     <PopoverBody>
-                        <Button onClick={this.logOut.bind(this)} className="logoutBtn" block>{icon}</Button>
+                        <ButtonSpinable onClick={this.logOut.bind(this)} className="logoutBtn" block loading={this.state.loggingOut}>
+                            <div>Log out <Icon path={mdiExitRun} size={1} color={"#fff"} className={'right-icon'}/>
+                            </div>
+                        </ButtonSpinable>
                     </PopoverBody>
                 </Popover>
             </div>
