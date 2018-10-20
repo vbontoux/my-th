@@ -57,13 +57,7 @@ export default class LoginForm extends React.Component {
         }, {fields: "public_profile, email"});
     };
 
-    handleError = (error) => {
-        console.log("[FB] " + error);
-        this.setConnecting();
-    };
-
     setConnecting(bool = false) {
-        console.log(this.state.connecting + " / " + bool);
         this.setState({
             connecting: bool
         })
