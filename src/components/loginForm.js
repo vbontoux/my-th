@@ -1,12 +1,10 @@
 import React from "react"
-
-import {Button} from "reactstrap"
 import {Icon} from "@mdi/react"
 import {mdiFacebook} from "@mdi/js"
 import {Auth} from "aws-amplify";
-import {PulseLoader} from "react-spinners";
-import ButtonSpinable from "./ButtonSpinable";
+import {getFbAvatar} from "../urlConfs"
 
+import ButtonSpinable from "./ButtonSpinable";
 
 export default class LoginForm extends React.Component {
 
@@ -28,7 +26,7 @@ export default class LoginForm extends React.Component {
             first_name: userData.first_name,
             last_name: userData.last_name,
             fbid: userData.id,
-            avatar: "https://graph.facebook.com/v3.1/" + userData.id + "/picture"
+            avatar: getFbAvatar(userData.id)
         }).then(credentials => {
             console.log("[AWS_Cogn] Connection success.");
             console.log(credentials);

@@ -3,9 +3,10 @@ import Routes from './Routes'
 import {Auth} from 'aws-amplify'
 import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from 'reactstrap'
 
+import {FacebookSDK} from './urlConfs'
+
 import AccountNavbarEntry from "./components/AccountNavbarEntry";
 import LoginNavbarEntry from "./components/LoginNavbarEntry";
-import LoginForm from "./components/loginForm";
 
 import './App.css';
 import './styles/utils.css'
@@ -40,7 +41,7 @@ class App extends Component {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
             js = d.createElement(s); js.id = id;
-            js.src = 'https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v3.1&appId=1961972997413886&autoLogAppEvents=1';
+            js.src = FacebookSDK;
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
@@ -69,7 +70,7 @@ class App extends Component {
     };
 
     logoutHandler = async () => {
-        console.log("[DEBUG] MTH - AWS Cognito: User logout.");
+        console.debug("[DEBUG] MTH - AWS Cognito: User logout.");
         await Auth.signOut()
             .then(() => {
                 this.authenticateUser(null);

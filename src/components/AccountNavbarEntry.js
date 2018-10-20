@@ -1,7 +1,5 @@
 import React from "react";
-import {NavItem, Button, NavLink} from "reactstrap";
-import {PulseLoader} from 'react-spinners'
-import {Popover, PopoverBody} from "reactstrap";
+import {NavItem, NavLink, Popover, PopoverBody} from "reactstrap";
 import {Icon} from '@mdi/react'
 import {mdiExitRun} from '@mdi/js'
 
