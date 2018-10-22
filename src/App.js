@@ -117,7 +117,7 @@ class App extends Component {
                     </Collapse>
                 </Navbar>
                 <UserContext.Provider>
-                    <Routes/>
+                    <Routes match={this.props.match}/>
                 </UserContext.Provider>
             </div>
         );
