@@ -1,15 +1,31 @@
-@media (min-width: 1200px) {
-    .container {
-        width: 75%;
-    }
+.manager-sidemenu {
+    width: 20%;
+    background: rgba(127, 255, 0, 0.1);
 }
 
-@media (max-width: 1200px) {
-    .container {
-        width: 100%;
-    }
+.manager-window{
+    flex: 1;
+    align-self: flex-start;
+    background: rgba(255, 127, 80, 0.1);
 }
 
-.container {
-    margin: 0 auto;
+.manager-wrapper {
+    padding-top: 2rem;
+    display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+.manager-wrapper > div {
+    margin: 0 1em 0 1em;
+    min-height: 3em;
+}
+
+.manager-sidemenu table {
+    width: 100%;
+}
+
+.manager-sidemenu table tr {
+    display: flex;
+    justify-content: space-between;
 }

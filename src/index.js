@@ -24,7 +24,20 @@ Amplify.configure({
     }
 });
 
-ReactDOM.render(<Router><App/></Router>, document.getElementById('root'));
+class DebugRouter extends Router {
+    constructor(props) {
+        super(props);
+        console.log('initial history is: ', JSON.stringify(this.history, null, 2))
+        this.history.listen((location, action) => {
+            console.log(
+                `The current URL is ${location.pathname}${location.search}${location.hash}`
+            );
+            console.log(`The last navigation action was ${action}`, JSON.stringify(this.history, null, 2));
+        });
+    }
+}
+
+ReactDOM.render(<DebugRouter><App/></DebugRouter>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

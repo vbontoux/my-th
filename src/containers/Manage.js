@@ -1,57 +1,49 @@
 import React, {Component} from 'react';
-import {Icon} from '@mdi/react'
-import {mdiPlusCircle} from '@mdi/js'
 
 import '../styles/Manager.css'
-import {Badge, Col, Nav, NavItem, NavLink, Row} from "reactstrap";
+import {Badge, Nav, NavItem, NavLink} from "reactstrap";
+import CollapsibleTitle from "../components/CollapsibleTitle";
+import {Link, Route} from "react-router-dom";
+import CreateCampaign from "./manage/CreateCampaign";
+import ManageCampaign from "./manage/ManageCampaign";
+import Routes from "./manage/Routes";
 
 class Manage extends Component {
 
     render() {
         return (
-            <div className="container" style={{margin: "2em auto"}}>
-                <div style={{width: "30%", margin: "0 0"}}>
-                    <Nav vertical style={{background: "#f8f9fa"}}>
-                        <NavItem>
-                            <NavLink href="manage/create">
-                                <Row style={{paddingLeft: "1em", fontSize: "1.5em"}}>
-                                    <Col sm={1} style={{display: "flex", padding: 0}}>
-                                        <Icon path={mdiPlusCircle} size={1} color={"#000"}/>
-                                    </Col>
-                                    <Col sm="auto" style={{padding: "1em auto auto auto "}}>
-                                        Start a campaign
-                                    </Col>
-                                </Row>
+            <div className="container-fluid">
+                <div className="manager-wrapper">
+                    <div className="manager-sidemenu">
+                        <Nav vertical style={{margin: "1em auto 1em"}}>
+                            <NavItem>
+                                <NavLink><h5><Link to={"/manage/create"}>New campaign</Link></h5></NavLink>
+                            </NavItem>
+                            <NavLink>
+                                <CollapsibleTitle title={<h5>My campaigns</h5>} separator>
+                                    <table>
+                                        <tbody>
+                                        <Link to="manage/1">
+                                            <tr>
+                                                <td>Campaign w/ errors</td>
+                                                <td><Badge color={"danger"}>5</Badge></td>
+                                            </tr>
+                                        </Link>
+                                        <Link to="manage/2">
+                                            <tr>
+                                                <td>Campaign test</td>
+                                                <td><Badge color={"success"}>2</Badge></td>
+                                            </tr>
+                                        </Link>
+                                        </tbody>
+                                    </table>
+                                </CollapsibleTitle>
                             </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink><h3>My campaigns</h3></NavLink>
-                        </NavItem>
-                        <div style={{fontSize: "1.2em"}}>
-                        <NavItem>
-                            <NavLink href="manage/1">
-                                <Row style={{paddingLeft: "1em"}}>
-                                    <Col sm={1} style={{display: "flex", padding: 0}}>
-                                    </Col>
-                                    <Col sm="auto" style={{padding: "1em auto auto auto "}}>
-                                        Campaign 1</Col>
-                                </Row>
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="manage/2">
-                                <Row style={{paddingLeft: "1em"}}>
-                                    <Col sm={1} style={{display: "flex", padding: 0}}>
-                                        <Badge color="danger" style={{height: "1.5em", margin: "auto"}}>5</Badge>
-                                    </Col>
-                                    <Col sm="auto" style={{padding: "1em auto auto auto "}}>
-                                        Campaign 2
-                                    </Col>
-                                </Row>
-                            </NavLink>
-                        </NavItem>
-                        </div>
-                    </Nav>
+                        </Nav>
+                    </div>
+                    <div className="manager-window">
+                        <Routes/>
+                    </div>
                 </div>
             </div>
         );

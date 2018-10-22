@@ -1,17 +1,16 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import {Route} from "react-router-dom";
+import e404 from "../e404";
+import CreateCampaign from "./CreateCampaign";
 
 class Routes extends Component {
     render() {
         return (
             <div>
-                {this.props.match.url}
-                {/*<Route path="${this.props.match.url}" exact component={} />*/}
+                <Route exact path={"/manage/create"} component={CreateCampaign}/>
             </div>
         );
     }
 }
-
-Routes.propTypes = {match: PropTypes.object.isRequired};
 
 export default Routes;

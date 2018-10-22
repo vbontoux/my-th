@@ -11,6 +11,7 @@ import LoginNavbarEntry from "./components/LoginNavbarEntry";
 import './App.css';
 import './styles/utils.css'
 import './styles/loginPopoverStyle.css'
+import {Link} from "react-router-dom";
 
 export const UserContext = React.createContext(null);
 
@@ -28,7 +29,7 @@ class App extends Component {
     }
 
     async componentDidMount() {
-        window.fbAsyncInit = function() {
+        window.fbAsyncInit = function () {
             window.FB.init({
                 appId: '587504355016303',
                 autoLogAppEvents: true,
@@ -37,10 +38,11 @@ class App extends Component {
             });
         };
 
-        (function(d, s, id) {
+        (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
+            js = d.createElement(s);
+            js.id = id;
             js.src = FacebookSDK;
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
@@ -87,37 +89,37 @@ class App extends Component {
     }
 
     render() {
-        const childProps = {
-            isAuthenticated: this.state.isAuthenticated,
-        };
         return (
-                !this.state.isAuthenticating &&
-                <div className="appWrapper" id="App">
-                    <Navbar color="light" light expand="md">
-                        <NavbarBrand href="/">
+            !this.state.isAuthenticating &&
+            <div className="appWrapper" id="App">
+                <Navbar color="light" light expand="md">
+                    <NavbarBrand>
+                        <Link to={"/"}>
                             <img alt="logo my-TreasureHunt"
                                  src="https://my-treasurehunt.com/assets/images/logositethmaj2017-430x90.jpg"
                                  style={{maxHeight: "50px", margin: "none"}}/>
-                        </NavbarBrand>
-                        <NavbarToggler onClick={() => {
-                            this.setState({openedSidenav: !this.state.openedSidenav});
-                        }}/>
-                        <Collapse navbar style={{paddingRight: "5em"}} isOpen={this.state.openedSidenav}>
-                            <Nav className="ml-auto main-navbar" navbar>
-                                <NavItem><NavLink href="TODO">About us</NavLink></NavItem>
-                                <NavItem><NavLink href="manage">Manage my campaigns</NavLink></NavItem>
-                                {this.state.user.isAuthenticated ?
-                                    <AccountNavbarEntry onLogout={this.logoutHandler} user={this.state.user}/>
-                                    :
-                                    <LoginNavbarEntry onLogin={this.authenticateUser}/>
-                                }
-                            </Nav>
-                        </Collapse>
-                    </Navbar>
-                    <UserContext.Provider>
-                        <Routes childProps={childProps}/>
-                    </UserContext.Provider>
-                </div>
+                        </Link>
+                    </NavbarBrand>
+                    <NavbarToggler onClick={() => {
+                        this.setState({openedSidenav: !this.state.openedSidenav});
+                    }}/>
+                    <Collapse navbar style={{paddingRight: "5em"}} isOpen={this.state.openedSidenav}>
+                        <Nav className="ml-auto main-navbar" navbar>
+                            <NavItem><NavLink><Link to={"/"}>About us</Link></NavLink></NavItem>
+                            {this.state.user.isAuthenticated &&
+                            <NavItem><NavLink><Link to={"/manage"}>Manage your campaigns</Link></NavLink></NavItem>}
+                            {this.state.user.isAuthenticated ?
+                                <AccountNavbarEntry onLogout={this.logoutHandler} user={this.state.user}/>
+                                :
+                                <LoginNavbarEntry onLogin={this.authenticateUser}/>
+                            }
+                        </Nav>
+                    </Collapse>
+                </Navbar>
+                <UserContext.Provider>
+                    <Routes/>
+                </UserContext.Provider>
+            </div>
         );
     }
 }

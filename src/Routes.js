@@ -5,9 +5,11 @@ import e404 from "./containers/e404"
 import Manage from "./containers/Manage";
 import AppliedRoute from "./components/AppliedRoute";
 
-export default () =>
+export default () => {
+    return (
     <Switch>
-        <AppliedRoute path="/" exact component={Home} />
-        <AppliedRoute path="/manage" exact component={Manage} />
-        <Route component={e404} />
-    </Switch>;
+        <Route path="/" exact component={Home}/>
+        <Route path="/manage" component={Manage}/>
+        <Route component={e404}/>
+    </Switch>
+)}

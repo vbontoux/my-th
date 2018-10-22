@@ -18,13 +18,14 @@
 
 nav {
     transition: height 0.5s;
+    padding: 0 !important;
 }
 
 .main-navbar a {
     cursor: pointer;
 }
 
-.main-navbar .nav-link {
+.main-navbar a {
     color: inherit !important;
     transition: color .2s ease-in-out;
     margin: auto 0; /* Important */
@@ -34,7 +35,7 @@ nav {
 .navbar .navbar-brand{
     padding-bottom: 0;
     padding-top: 0;
-    object-fit: cover;
+height: 100%;
 }
 
 /*Img settings*/
@@ -54,6 +55,6 @@ nav {
 
 @media (min-width: 500px) {
     .navbar-brand {
-        padding-left: 5em
+        margin-left: 5em
     }
 }
