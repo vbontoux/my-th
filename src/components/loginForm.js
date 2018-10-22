@@ -28,14 +28,13 @@ export default class LoginForm extends React.Component {
             fbid: userData.id,
             avatar: getFbAvatar(userData.id)
         }).then(credentials => {
-            console.log("[AWS_Cogn] Connection success.");
-            console.log(credentials);
+            console.debug("[AWS_Cogn] Connection success.", credentials);
             this.setConnecting();
             Auth.currentAuthenticatedUser().then(user => {
                 this.state.onLogin(user)
             });
         }).catch(e => {
-            console.log("[AWS_Cogn] " + e);
+            console.error("[AWS_Cogn] " + e);
             this.setConnecting()
         });
     };
