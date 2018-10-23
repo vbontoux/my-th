@@ -3,7 +3,7 @@
     background: rgba(127, 255, 0, 0.1);
 }
 
-.manager-window{
+.manager-window {
     flex: 1;
     align-self: flex-start;
     background: rgba(255, 127, 80, 0.1);
@@ -28,4 +28,26 @@
 .manager-sidemenu table tr {
     display: flex;
     justify-content: space-between;
+}
+
+.sidenav_entry {
+    display: flex;
+    margin-left: 1em;
+    margin-right: 1em;
+    justify-content: space-between;
+}
+
+.nav a {
+    color: #98be5d;
+    transition: color 0.2s ease-in-out;
+    text-decoration: none !important;
+}
+
+.sidenav_entry h5 {
+    font-weight: bold;
+}
+
+.nav a:hover {
+    color: #999999;
+    text-decoration: none !important;
 }
