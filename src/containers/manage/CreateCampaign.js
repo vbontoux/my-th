@@ -13,6 +13,18 @@ const interfaceText = [
     "Twitter description goes here",
     "E-Mail description goes here"];
 
+class ImageFieldInfos {
+
+    constructor(label = "Pick 1 image or more", count = 0) {
+        this.label = label;
+        this.count = count;
+        this.errors = null;
+    }
+
+    label;
+    count;
+    errors;
+}
 
 class CreateCampaign extends Component {
 
@@ -23,9 +35,9 @@ class CreateCampaign extends Component {
             help_text_type: typeTexts[0],
             help_test_interface: interfaceText[0],
             open_interface_settings: false,
-            imageLabel: "Pick 1 image or more",
-            imageCount: 0,
-            imageErrors: null
+            indexImages: new ImageFieldInfos(),
+            firstMessageImage: new ImageFieldInfos(''),
+            facebookError: null
         }
     }
 
@@ -41,27 +53,56 @@ class CreateCampaign extends Component {
         });
     };
 
-    handleImagesChange = (e) => {
+    handleIndexImagesChange = (e) => {
         const files = e.target.files;
-        const err = [];
-        console.log(e.target);
-        if (files) {
-            for (let i = 0; i < files.length; i++) {
-                const f = files.item(i);
-                if (f.type === "" || !f.type.match("image/")) {
-                    this.setState({
-                        imageErrors: `Invalid files types`
-                    });
-                    e.target.invalid = true;
-                    return
-                }
-            }
+        if (areImage(files))
             this.setState({
-                imageErrors: null,
-                imageCount: files.length,
-                imageLabel: `${files.length} image${(files.length > 1) ? 's' : ''} selected`
+                indexImages: {
+                    errors: null,
+                    count: files.length,
+                    label: `${files.length} image${(files.length > 1) ? 's' : ''} selected`
+                }
             });
+        else {
+            this.setState({
+                indexImages: {
+                    errors: "Invalid images types",
+                    count: 0,
+                    label: "Pick 1 image or more"
+                }
+            });
+            e.target.value = "";
         }
+    };
+
+    handleFirstMessageImagesChange = (e) => {
+        const files = e.target.files;
+        if (areImage(files))
+            this.setState({
+                firstMessageImage: {
+                    errors: null,
+                    count: files.length,
+                    label: files[0].name
+                }
+            });
+        else {
+            this.setState({
+                firstMessageImage: {
+                    errors: "Invalid images types",
+                    count: 0,
+                    label: ""
+                }
+            });
+            e.target.value = "";
+        }
+    };
+
+    handleFacebookPageChange = (e) => {
+        this.setState({
+            facebookError: (e.target.value && e.target.value.match(/^https:\/\/www\.facebook\.com\//g)) ?
+                null :
+                "Facebook URLs must start with : https://www.facebook.com/"
+        })
     };
 
     render() {
@@ -130,9 +171,11 @@ class CreateCampaign extends Component {
                             <Col>
                                 <FormGroup>
                                     <Label>Images à indexer</Label>
-                                    <CustomInput type="file" label={this.state.imageLabel}
-                                                 multiple onChange={this.handleImagesChange} invalid={this.state.imageErrors}/>
-                                    <FormFeedback style={{display: (this.state.imageErrors) ? "block" : "none"}}>{this.state.imageErrors}</FormFeedback>
+                                    <CustomInput type="file" label={this.state.indexImages.label}
+                                                 multiple onChange={this.handleIndexImagesChange}
+                                                 invalid={this.state.indexImages.errors}/>
+                                    <FormFeedback
+                                        style={{display: (this.state.indexImages.errors) ? "block" : "none"}}>{this.state.indexImages.errors}</FormFeedback>
                                 </FormGroup>
                             </Col>
                             <Col>
@@ -148,7 +191,53 @@ class CreateCampaign extends Component {
                             <Col>
                                 <FormGroup>
                                     <Label>Facebook page</Label>
-                                    <Input type="url" placeholder={'https://www.facebook.com/'}/>
+                                    <Input type="url" placeholder={'https://www.facebook.com/'}
+                                           invalid={this.state.facebookError} onChange={this.handleFacebookPageChange}/>
+                                    <FormFeedback
+                                        style={{display: (this.state.facebookError) ? "block" : "none"}}>{this.state.facebookError}</FormFeedback>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                        <Row form>
+                            <Col xs={12} xl={6}>
+                                <FormGroup>
+                                    <Label>First message</Label>
+                                    <Input type="textarea" placeholder={"Rappel de la règle du jeu"}/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label>Images à indexer</Label>
+                                    <CustomInput type="file" label={this.state.firstMessageImage.label}
+                                                 multiple onChange={this.handleFirstMessageImagesChange}/>
+                                    <FormFeedback
+                                        style={{display: (this.state.firstMessageImage.errors) ? "block" : "none"}}>{this.state.firstMessageImage.errors}</FormFeedback>
+                                </FormGroup>
+                            </Col>
+                            <Col xs={12} xl={6}>
+                                <FormGroup>
+                                    <Label>Final message</Label>
+                                    <Input type="textarea" placeholder={"Invitation au partage"}/>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                        <Row form>
+                            <Col xs={12} xl={4}>
+                                <FormGroup>
+                                    <Label>Analysis message</Label>
+                                    <Input type="textarea"
+                                           placeholder={"Apparaît après chaque envoi d'images par le joueur"}/>
+                                </FormGroup>
+                            </Col>
+                            <Col xs={12} xl={4}>
+                                <FormGroup>
+                                    <Label>Match end message</Label>
+                                    <Input type="textarea" placeholder={"?"}/>
+                                </FormGroup>
+                            </Col>
+                            <Col xs={12} xl={4}>
+                                <FormGroup>
+                                    <Label>Default message</Label>
+                                    <Input type="textarea"
+                                           placeholder={"Texte quand le bot ne comprend pas (pas d'image)"}/>
                                 </FormGroup>
                             </Col>
                         </Row>
@@ -158,6 +247,19 @@ class CreateCampaign extends Component {
         );
     }
 }
+
+function areImage(files) {
+    if (files) {
+        for (let i = 0; i < files.length; i++) {
+            const f = files.item(i);
+            if (f.type === "" || !f.type.match(/^image\//g))
+                return false;
+        }
+        return true;
+    }
+    return false;
+}
+
 
 CreateCampaign.propTypes = {};
 

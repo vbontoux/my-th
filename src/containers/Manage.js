@@ -37,7 +37,7 @@ class Manage extends Component {
                                 </NavItem>
                             </Link>
                             <NavLink>
-                                <CollapsibleTitle title={<h5>Actives campaigns</h5>} separator isOpen>
+                                <CollapsibleTitle title={<h5>Actives campaigns</h5>} separator={false} isOpen>
                                     <table>
                                         <tbody>
                                         <Link to={`${this.props.match.url}/1`}>
@@ -55,7 +55,7 @@ class Manage extends Component {
                                         </tbody>
                                     </table>
                                 </CollapsibleTitle>
-                                <CollapsibleTitle title={<h5>Finished campaigns</h5>} separator>
+                                <CollapsibleTitle title={<h5>Finished campaigns</h5>} separator={false}>
                                     <table>
                                         <tbody>
                                         <Link to={`${this.props.match.url}/3`}>
