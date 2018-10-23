@@ -15,22 +15,17 @@ class CollapsibleTitle extends Component {
         this.state = {
             openedCollapsible: false,
             icon: this.props.icon,
-            icon_style: {}
+            rotation: 0
         }
     }
 
     toggleCollapsible = () => {
 
         const newCollapsibleState = !this.state.openedCollapsible;
-        const newTransform = {
-            transformOrigin: 'center center',
-            transform: "rotate(-90deg)",
-            webkitTransform: "rotate(-90deg)"
-        };
 
         this.setState({
             openedCollapsible: newCollapsibleState,
-            icon_style: (newCollapsibleState) ? newTransform : {}
+            rotation: (newCollapsibleState) ? -90 : 0
         });
     };
 
@@ -45,7 +40,12 @@ class CollapsibleTitle extends Component {
                     </div>
                     <Icon className="collapsible-icon" path={this.props.icon}
                           size={this.props.icon_size} color={this.props.icon_color}
-                        // style={this.state.icon_style}
+                          style={{
+                              transformOrigin: 'center center',
+                              transform: `rotate(${this.state.rotation}deg)`,
+                              WebkitTransform: `rotate(${this.state.rotation}deg)`
+                          }
+                          }
                     />
                 </div>
                 <Collapse className="collapsible-content" isOpen={this.state.openedCollapsible}>
