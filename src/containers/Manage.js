@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-
-import '../styles/Manager.css'
 import {Badge, Nav, NavItem, NavLink} from "reactstrap";
 import CollapsibleTitle from "../components/CollapsibleTitle";
 import {Link, Route} from "react-router-dom";
-import CreateCampaign from "./manage/CreateCampaign";
-import ManageCampaign from "./manage/ManageCampaign";
+import {Icon} from '@mdi/react'
+import {mdiPlusCircle} from '@mdi/js'
 import Routes from "./manage/Routes";
 import PropTypes from "prop-types";
+
+import "../styles/utils.css"
+import "../styles/Manager.css"
 
 class Manage extends Component {
 
@@ -17,11 +18,17 @@ class Manage extends Component {
                 <div className="manager-wrapper">
                     <div className="manager-sidemenu">
                         <Nav vertical style={{margin: "1em auto 1em"}}>
-                            <NavItem>
-                                <NavLink><h5><Link to={`${this.props.match.url}/create`}>New campaign</Link></h5></NavLink>
-                            </NavItem>
+                            <Link to={`${this.props.match.url}/create`}>
+                                <NavItem>
+                                    <div className="sidenav_entry">
+                                        <h5>New campaign
+                                        </h5>
+                                        <Icon path={mdiPlusCircle} size={1} color={"#999"}/>
+                                    </div>
+                                </NavItem>
+                            </Link>
                             <NavLink>
-                                <CollapsibleTitle title={<h5>My campaigns</h5>} separator>
+                                <CollapsibleTitle title={<h5>Actives campaigns</h5>} separator>
                                     <table>
                                         <tbody>
                                         <Link to={`${this.props.match.url}/1`}>
@@ -34,6 +41,29 @@ class Manage extends Component {
                                             <tr>
                                                 <td>Campaign test</td>
                                                 <td><Badge color={"success"}>2</Badge></td>
+                                            </tr>
+                                        </Link>
+                                        </tbody>
+                                    </table>
+                                </CollapsibleTitle>
+                                <CollapsibleTitle title={<h5>Finished campaigns</h5>} separator>
+                                    <table>
+                                        <tbody>
+                                        <Link to={`${this.props.match.url}/3`}>
+                                            <tr>
+                                                <td>Campaign 3</td>
+                                            </tr>
+                                        </Link>
+                                        </tbody>
+                                    </table>
+                                </CollapsibleTitle>
+                                <CollapsibleTitle title={<h5>Draft campaigns</h5>} separator>
+                                    <table>
+                                        <tbody>
+                                        <Link to={`${this.props.match.url}/d154`}>
+                                            <tr>
+                                                <td>Campaign 3</td>
+                                                <td><Badge color={"light"}>Draft</Badge></td>
                                             </tr>
                                         </Link>
                                         </tbody>
