@@ -13,9 +13,9 @@ class CollapsibleTitle extends Component {
         super(props);
 
         this.state = {
-            openedCollapsible: false,
+            openedCollapsible: this.props.isOpen,
             icon: this.props.icon,
-            rotation: 0
+            rotation: this.props.isOpen * -90,
         }
     }
 
@@ -25,7 +25,7 @@ class CollapsibleTitle extends Component {
 
         this.setState({
             openedCollapsible: newCollapsibleState,
-            rotation: (newCollapsibleState) ? -90 : 0
+            rotation: -90 * newCollapsibleState
         });
     };
 
@@ -33,11 +33,9 @@ class CollapsibleTitle extends Component {
         return (
             <div style={{width: "100%"}}>
                 <div className="collapsible-title" onClick={this.toggleCollapsible}>
-                    <div>
-                        {(typeof this.props.title === "string") ? <h2>{this.props.title}</h2> : this.props.title}
-                        {this.props.notification &&
-                        <Badge color="danger" className="collapsible-notif">{this.props.notification}</Badge>}
-                    </div>
+                    {(typeof this.props.title === "string") ? <h2>{this.props.title}</h2> : this.props.title}
+                    {this.props.notification &&
+                    <Badge color="danger" className="collapsible-notif">{this.props.notification}</Badge>}
                     <Icon className="collapsible-icon" path={this.props.icon}
                           size={this.props.icon_size} color={this.props.icon_color}
                           style={{
@@ -65,6 +63,7 @@ CollapsibleTitle.propTypes = {
     notification: PropTypes.string,
     separator: PropTypes.bool,
     title_tag: PropTypes.element,
+    isOpen: PropTypes.bool
 };
 
 CollapsibleTitle.defaultProps = {
@@ -72,7 +71,7 @@ CollapsibleTitle.defaultProps = {
     icon_size: 1.5,
     icon_color: "#dddddd",
     separator: false,
-    title_tag: <h2></h2>
+    isOpen: false
 };
 
 export default CollapsibleTitle;

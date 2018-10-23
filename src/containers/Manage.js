@@ -3,7 +3,7 @@ import {Badge, Nav, NavItem, NavLink} from "reactstrap";
 import CollapsibleTitle from "../components/CollapsibleTitle";
 import {Link, Route} from "react-router-dom";
 import {Icon} from '@mdi/react'
-import {mdiPlusCircle} from '@mdi/js'
+import {mdiPlusCircle,mdiFinance} from '@mdi/js'
 import Routes from "./manage/Routes";
 import PropTypes from "prop-types";
 
@@ -18,6 +18,15 @@ class Manage extends Component {
                 <div className="manager-wrapper">
                     <div className="manager-sidemenu">
                         <Nav vertical style={{margin: "1em auto 1em"}}>
+                            <Link to={`${this.props.match.url}`}>
+                                <NavItem>
+                                    <div className="sidenav_entry">
+                                        <h5>Management Panel
+                                        </h5>
+                                        <Icon path={mdiFinance} size={1} color={"#999"}/>
+                                    </div>
+                                </NavItem>
+                            </Link>
                             <Link to={`${this.props.match.url}/create`}>
                                 <NavItem>
                                     <div className="sidenav_entry">
@@ -28,7 +37,7 @@ class Manage extends Component {
                                 </NavItem>
                             </Link>
                             <NavLink>
-                                <CollapsibleTitle title={<h5>Actives campaigns</h5>} separator>
+                                <CollapsibleTitle title={<h5>Actives campaigns</h5>} separator isOpen>
                                     <table>
                                         <tbody>
                                         <Link to={`${this.props.match.url}/1`}>

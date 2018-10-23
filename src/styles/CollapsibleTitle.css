@@ -1,6 +1,7 @@
 div.collapsible-title {
     display: flex;
     justify-content: space-between;
+    align-content: baseline;
     width: 100%;
     cursor: pointer;
 }
@@ -8,10 +9,7 @@ div.collapsible-title {
 .collapsible-title h2 {
     float: left;
     display: inline;
-}
-
-.collapsible-title svg {
-    margin-right: 5%;
+    margin: 0;
 }
 
 .collapsible-icon {
@@ -28,6 +26,6 @@ div.collapsible-title {
 }
 
 hr {
-    margin-top: 0;
-    margin-bottom: 2rem;
+    margin-top: .5em;
+    margin-bottom: 2em;
 }
