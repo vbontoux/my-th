@@ -25,7 +25,7 @@ class CollapsibleTitle extends Component {
 
         this.setState({
             openedCollapsible: newCollapsibleState,
-            rotation: -90 * newCollapsibleState
+            rotation: -90 * newCollapsibleState * this.props.rotate_icon
         });
     };
 
@@ -56,22 +56,25 @@ class CollapsibleTitle extends Component {
 }
 
 CollapsibleTitle.propTypes = {
-    title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
     icon: PropTypes.string,
     icon_size: PropTypes.number,
     icon_color: PropTypes.string,
     notification: PropTypes.string,
     separator: PropTypes.bool,
     title_tag: PropTypes.element,
-    isOpen: PropTypes.bool
+    isOpen: PropTypes.bool,
+    rotate_icon: PropTypes.bool,
+    children: PropTypes.node.isRequired
 };
 
 CollapsibleTitle.defaultProps = {
     icon: mdiMenuLeft,
     icon_size: 1.5,
     icon_color: "#dddddd",
-    separator: false,
-    isOpen: false
+    separator: true,
+    isOpen: false,
+    rotate_icon: true
 };
 
 export default CollapsibleTitle;
