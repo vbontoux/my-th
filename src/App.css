@@ -22,6 +22,7 @@ nav {
 }
 
 .main-navbar a {
+    text-decoration: none;
     cursor: pointer;
 }
 
