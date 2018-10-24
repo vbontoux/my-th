@@ -412,8 +412,8 @@ class CreateCampaign extends Component {
                             </Col>
                             <Col xs={12} xl={6}>
                                 <FormGroup>
-                                    <Label>Nom</Label>
-                                    <Input placeholder={"Email adressé pour chaque perdant (hors Tirage au sort)."}/>
+                                    <Label>Template email perdu</Label>
+                                    <Input type="textarea" placeholder={"Email adressé pour chaque perdant."}/>
                                 </FormGroup>
                             </Col>
                         </Row>
