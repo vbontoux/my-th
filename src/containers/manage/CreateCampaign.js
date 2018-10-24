@@ -456,28 +456,6 @@ class CreateCampaign extends Component {
     }
 }
 
-class SelectInformations {
-    choices;
-    helpTexts;
-    value;
-
-    constructor(choices, helpTexts, defaultValue = 0) {
-        this.value = defaultValue;
-        this.choices = choices;
-        this.helpTexts = helpTexts;
-    }
-
-    get help() {
-        return this.helpTexts[this.value]
-    }
-
-    get choice() {
-        return this.choices[this.value]
-    }
-
-
-}
-
 function areImage(files) {
     if (files) {
         for (let i = 0; i < files.length; i++) {
