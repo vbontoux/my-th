@@ -9,4 +9,8 @@ export default {
         APP_CLIENT_ID: "3j5h6askbk3olkl0p9hc36ekg4",
         IDENTITY_POOL_ID: "us-east-2:da8eb9ab-85ad-445a-9e09-e286f1620edf"
     }
+    // ,cognito: {
+    //     REGION: "eu-west-1",
+    //     IDENTITY_POOL_ID: "eu-west-1:4c3cd1bd-ab32-4733-9896-b63fc17fdbd5"
+    // }
 };
