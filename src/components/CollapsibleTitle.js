@@ -31,7 +31,7 @@ class CollapsibleTitle extends Component {
 
     render() {
         return (
-            <div style={{width: "100%"}}>
+            <div style={{width: '100%', ...this.props.style}}>
                 <div className="collapsible-title" onClick={this.toggleCollapsible}>
                     {(typeof this.props.title === "string") ? <h2>{this.props.title}</h2> : this.props.title}
                     {this.props.notification &&
