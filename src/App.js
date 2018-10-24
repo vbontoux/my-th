@@ -3,7 +3,7 @@ import Routes from './Routes'
 import {Auth} from 'aws-amplify'
 import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from 'reactstrap'
 
-import {FacebookSDK} from './urlConfs'
+import {urls, facebookAppID} from './config'
 
 import AccountNavbarEntry from "./components/AccountNavbarEntry";
 import LoginNavbarEntry from "./components/LoginNavbarEntry";
@@ -31,7 +31,7 @@ class App extends Component {
     async componentDidMount() {
         window.fbAsyncInit = function () {
             window.FB.init({
-                appId: '587504355016303',
+                appId: facebookAppID,
                 autoLogAppEvents: true,
                 xfbml: true,
                 version: 'v3.1'
@@ -43,7 +43,8 @@ class App extends Component {
             if (d.getElementById(id)) return;
             js = d.createElement(s);
             js.id = id;
-            js.src = FacebookSDK;
+            js.src = urls.FacebookSDK;
+            console.log(`Facebook SDK: ${js.src}`);
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 

@@ -2,7 +2,7 @@ import React from "react"
 import {Icon} from "@mdi/react"
 import {mdiFacebook} from "@mdi/js"
 import {Auth} from "aws-amplify";
-import {getFbAvatar} from "../urlConfs"
+import {urls} from "../config"
 
 import ButtonSpinable from "./ButtonSpinable";
 
@@ -18,15 +18,14 @@ export default class LoginForm extends React.Component {
     };
 
     FacebookToAWS(tokenData, userData) {
-        console.debug("[DEBUG] MTH - AWS Log in : ");
-        console.log(tokenData, userData);
+        console.debug("[DEBUG] MTH - AWS Log in : ", tokenData, userData);
         Auth.federatedSignIn("facebook", {...tokenData}, {
             email: userData.email,
             username: userData.name,
             first_name: userData.first_name,
             last_name: userData.last_name,
             fbid: userData.id,
-            avatar: getFbAvatar(userData.id)
+            avatar: urls.getFbAvatar(userData.id)
         }).then(credentials => {
             console.debug("[AWS_Cogn] Connection success.", credentials);
             this.setConnecting();
