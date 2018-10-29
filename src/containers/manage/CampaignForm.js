@@ -43,18 +43,25 @@ class CampaignForm extends Component {
 
     constructor(props) {
         super(props);
-
+        var c = this.props.campaign;
         this.state = {
-            selectExperience: {value: 0, choices: experiencesTypes, helps: experiencesInformations},
-            selectCampaignType: {value: 0, choices: campaignsTypes, helps: campaignsInformations},
-            selectGameType: {value: 0, choices: gameType, helps: gameInformations},
+            selectExperience: {
+                value: (c) ? c.experienceSettings.type : 0,
+                choices: experiencesTypes,
+                helps: experiencesInformations
+            },
+            selectCampaignType: {
+                value: (c) ? c.campaignSettings.type : 0,
+                choices: campaignsTypes,
+                helps: campaignsInformations
+            },
+            selectGameType: {value: (c) ? c.gameSettings.type : 0, choices: gameType, helps: gameInformations},
 
             open_interface_settings: false,
-            indexImages: new ImageFieldInfos("Séléctionnez une image ou plus"),
+            indexImages: new ImageFieldInfos((c) ? "Séléctionnez au moins une image" : "Séléctionnez une image"), //TODO: Retrieving existing campaign files
             firstMessageImage: new ImageFieldInfos(),
             facebookError: null,
-            campaignType: campaignsTypes[0],
-            attachToGame: false
+            attachToGame: c.gameSettings !== null
         }
     }
 
@@ -180,7 +187,7 @@ class CampaignForm extends Component {
                                 <FormGroup>
                                     <Label for="type-select">Type d'expérience</Label>
                                     <Input type="select" onChange={this.handleChangeExperience}
-                                           defaultValue={this.state.selectExperience.value}>
+                                           defaultValue={this.state.selectExperience.value} disabled={(c != null)}>
                                         {this.state.selectExperience.choices.map(arrayToOptions)}
                                     </Input>
                                 </FormGroup>
@@ -206,7 +213,8 @@ class CampaignForm extends Component {
                                 <FormGroup>
                                     <Label>Images à indexer</Label>
                                     <CustomInput type="file" label={this.state.indexImages.label}
-                                                 multiple onChange={this.handleIndexImagesChange}
+                                                 multiple={(c.campaignSettings.type === 1)}
+                                                 onChange={this.handleIndexImagesChange}
                                                  invalid={this.state.indexImages.errors}/>
                                     <FormFeedback
                                         style={{display: (this.state.indexImages.errors) ? "block" : "none"}}>{this.state.indexImages.errors}</FormFeedback>
@@ -221,7 +229,7 @@ class CampaignForm extends Component {
                             <Col>
                                 <FormGroup>
                                     <Label>Email de contact</Label>
-                                    <Input type="email" placeholder={"exemple@dom.fr"}/>
+                                    <Input type="email" placeholder={"exemple@dom.fr"} defaultValue={c.emailContact}/>
                                 </FormGroup>
                             </Col>
                         </Row>
@@ -229,14 +237,14 @@ class CampaignForm extends Component {
                             <Col>
                                 <FormGroup check>
                                     <Label check>
-                                        <Input type="checkbox" onChange={this.handleGameCheckboxChange}/>
+                                        <Input type="checkbox" onChange={this.handleGameCheckboxChange} checked={c.gameSettings}/>
                                         Attacher ma campagne à un jeu Click&Gain
                                     </Label>
                                 </FormGroup>
                             </Col>
                         </Row>
                     </CollapsibleTitle>
-                    {this.state.campaignType === campaignsTypes[0] &&
+                    {this.state.selectCampaignType.value === 0 &&
                     <CollapsibleTitle title={<h4>Paramètres de campagne facebook</h4>}>
                         <Row form>
                             <Col>
@@ -466,7 +474,7 @@ class CampaignForm extends Component {
     }
 }
 
-function lzpad (obj, length) {
+function lzpad(obj, length) {
     var str = obj;
     if (typeof obj !== 'string')
         str = obj.toString();
@@ -477,7 +485,7 @@ function lzpad (obj, length) {
 
 function FormatAndSplitDate(moment) {
     return [moment.format('YYYY-MM-DD'),
-    moment.format('HH:mm:ss')]
+        moment.format('HH:mm:ss')]
 }
 
 function areImage(files) {
