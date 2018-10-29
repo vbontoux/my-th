@@ -78,8 +78,8 @@ export class HuntSettings extends ExperienceSettings {
         }
 
         collectCount;
-        templateMatch;
-        templateMatchEnd;
+        msgMatch;
+        msgMatchEnd;
     }
 
 export class GameSettings extends Settings {

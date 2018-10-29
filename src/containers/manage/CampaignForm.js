@@ -6,6 +6,7 @@ import Information from "../../components/Information";
 import {Icon} from '@mdi/react'
 import {mdiPlusCircle, mdiContentSave, mdiTreasureChest} from '@mdi/js'
 import Campaign from "../../Campaign";
+import CampaignFields from "./CampaignFields";
 
 const experiencesTypes = ["Informatif", "Chasse / Parcour", "Vote"];
 const experiencesInformations = [
@@ -26,7 +27,9 @@ const gameInformations = [
     "pas de limite de participation perdante par défaut. Possibilité de paramétrer un délai fixe entre 2 participations."
 ];
 
-class ImageFieldInfos {
+//TODO use enums for checking types
+
+export class ImageFieldInfos {
 
     constructor(label = "", count = 0) {
         this.label = label;
@@ -59,9 +62,7 @@ class CampaignForm extends Component {
 
             open_interface_settings: false,
             indexImages: new ImageFieldInfos((c) ? "Séléctionnez au moins une image" : "Séléctionnez une image"), //TODO: Retrieving existing campaign files
-            firstMessageImage: new ImageFieldInfos(),
-            facebookError: null,
-            attachToGame: c.gameSettings !== null
+            attachToGame: (c) ? c.gameSettings !== null : false
         }
     }
 
@@ -108,46 +109,20 @@ class CampaignForm extends Component {
         }
     };
 
-    handleFirstMessageImagesChange = (e) => {
-        const files = e.target.files;
-        if (areImage(files))
-            this.setState({
-                firstMessageImage: {
-                    errors: null,
-                    count: files.length,
-                    label: files[0].name
-                }
-            });
-        else {
-            this.setState({
-                firstMessageImage: {
-                    errors: "Type de fichier invalide",
-                    count: 0,
-                    label: ""
-                }
-            });
-            e.target.value = "";
-        }
-    };
-
     handleGameCheckboxChange = (e) => {
         this.setState({
             attachToGame: (e.target.checked)
         });
     };
 
-    handleFacebookPageChange = (e) => {
-        this.setState({
-            facebookError: (e.target.value && e.target.value.match(/^https:\/\/www\.facebook\.com\//g)) ?
-                null :
-                "Facebook URLs must start with : https://www.facebook.com/"
-        })
-    };
-
     render() {
         var c = this.props.campaign;
-        var start = (c) ? FormatAndSplitDate(c.start) : [null, null];
-        var end = (c) ? FormatAndSplitDate(c.end) : [null, null];
+        var start = [null, null];
+        var end = [null, null];
+        if (c) {
+            start = FormatAndSplitDate(c.start);
+            end = FormatAndSplitDate(c.start);
+        }
         return (
             <div id="newCampaign" style={{margin: '1em'}}>
                 <Form>
@@ -237,61 +212,10 @@ class CampaignForm extends Component {
                             <Col>
                                 <FormGroup check>
                                     <Label check>
-                                        <Input type="checkbox" onChange={this.handleGameCheckboxChange} checked={c.gameSettings}/>
+                                        <Input type="checkbox" onChange={this.handleGameCheckboxChange}
+                                               defaultValue={c.gameSettings != null} checked={this.state.attachToGame}/>
                                         Attacher ma campagne à un jeu Click&Gain
                                     </Label>
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                    </CollapsibleTitle>
-                    {this.state.selectCampaignType.value === 0 &&
-                    <CollapsibleTitle title={<h4>Paramètres de campagne facebook</h4>}>
-                        <Row form>
-                            <Col>
-                                <FormGroup>
-                                    <Label>Page Facebook</Label>
-                                    <Input type="url" placeholder={'https://www.facebook.com/'}
-                                           invalid={this.state.facebookError}
-                                           onChange={this.handleFacebookPageChange}/>
-                                    <FormFeedback
-                                        style={{display: (this.state.facebookError) ? "block" : "none"}}>{this.state.facebookError}</FormFeedback>
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                        <Row form>
-                            <Col xs={12} xl={6}>
-                                <FormGroup>
-                                    <Label>Premier message</Label>
-                                    <Input type="textarea" placeholder={"Rappel de la règle du jeu"}/>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label>Images premier message</Label>
-                                    <CustomInput type="file" label={this.state.firstMessageImage.label}
-                                                 multiple onChange={this.handleFirstMessageImagesChange}/>
-                                    <FormFeedback
-                                        style={{display: (this.state.firstMessageImage.errors) ? "block" : "none"}}>{this.state.firstMessageImage.errors}</FormFeedback>
-                                </FormGroup>
-                            </Col>
-                            <Col xs={12} xl={6}>
-                                <FormGroup>
-                                    <Label>Message final</Label>
-                                    <Input type="textarea" placeholder={"Invitation au partage"}/>
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                        <Row form>
-                            <Col xs={12} xl={6}>
-                                <FormGroup>
-                                    <Label>Message d'analyse</Label>
-                                    <Input type="textarea"
-                                           placeholder={"Apparaît après chaque envoi d'images par le joueur"}/>
-                                </FormGroup>
-                            </Col>
-                            <Col xs={12} xl={6}>
-                                <FormGroup>
-                                    <Label>Message par défaut</Label>
-                                    <Input type="textarea"
-                                           placeholder={"Texte quand le bot ne comprend pas (pas d'image)"}/>
                                 </FormGroup>
                             </Col>
                         </Row>
@@ -301,20 +225,22 @@ class CampaignForm extends Component {
                                 <FormGroup>
                                     <Label>Message match parcours</Label>
                                     <Input type="textarea"
-                                           placeholder={"Message adressé pour chaque \"checkin\" (image appartenant au parcours) mais achèvement non atteint"}/>
+                                           placeholder={"Message adressé pour chaque \"checkin\" (image appartenant au parcours) mais achèvement non atteint"}
+                                           defaultValue={(c.experienceSettings) ? c.experienceSettings.msgMatch : ''}/>
                                 </FormGroup>
                             </Col>
                             <Col xs={12} xl={6}>
                                 <FormGroup>
                                     <Label>Message match fin</Label>
                                     <Input type="textarea"
-                                           placeholder={"Message adressé lorsque l'achèvement est atteint"}/>
+                                           placeholder={"Message adressé lorsque l'achèvement est atteint"}
+                                           defaultValue={(c.experienceSettings) ? c.experienceSettings.msgMatchEnd : ''}/>
                                 </FormGroup>
                             </Col>
                         </Row>
                         }
                     </CollapsibleTitle>
-                    }
+                    <CampaignFields settings={c.campaignSettings}/>
                     {this.state.attachToGame &&
                     <CollapsibleTitle title={<h4>Paramètres de jeu Click&Gain</h4>}>
                         <Row form>
@@ -488,7 +414,7 @@ function FormatAndSplitDate(moment) {
         moment.format('HH:mm:ss')]
 }
 
-function areImage(files) {
+export function areImage(files) {
     if (files) {
         for (let i = 0; i < files.length; i++) {
             const f = files.item(i);
