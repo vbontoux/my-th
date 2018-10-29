@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export default class Campaign {
 
 
@@ -127,8 +129,8 @@ export class Lot {
 export var CampaignStartList = [
     new Campaign(1,
         "eu-west-1:9632e005-71d0-4c2b-a756-61add1005133",
-        new Date("10/1/18 00:00"),
-        new Date("10/31/18 23:59"),
+        new moment("10/1/18 00:00"),
+        new moment("10/31/18 23:59"),
         [],
         "thibaut.cens@gmail.com",
         new ExperienceSettings(1),
