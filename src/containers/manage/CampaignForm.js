@@ -106,7 +106,7 @@ class CampaignForm extends Component {
         var end = [null, null];
         if (c) {
             start = FormatAndSplitDate(c.start);
-            end = FormatAndSplitDate(c.start);
+            end = FormatAndSplitDate(c.end);
         }
         return (
             <div id="newCampaign" style={{margin: '1em'}}>
