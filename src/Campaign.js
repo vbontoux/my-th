@@ -86,12 +86,12 @@ export class GameSettings extends Settings {
 
     static verboseTypes = ["Concours", "Tirage au sort", "Instants gagnants"];
 
-    constructor(type, id, description, lots, rules, addressEmailFrom, nameEmailFrom, objectEmailFrom, templateMsgWon,
+    constructor(type, id, description, prizes, rules, addressEmailFrom, nameEmailFrom, objectEmailFrom, templateMsgWon,
                 templateMsgLost) {
         super(type);
         this.id = id;
         this.description = description;
-        this.lots = lots;
+        this.prizes = prizes;
         this.rules = rules;
         this.addressEmailFrom = addressEmailFrom;
         this.nameEmailFrom = nameEmailFrom;
@@ -102,7 +102,7 @@ export class GameSettings extends Settings {
 
     id;
     description;
-    lots = [];
+    prizes = [];
     rules;
     addressEmailFrom;
     nameEmailFrom;
@@ -111,7 +111,7 @@ export class GameSettings extends Settings {
     templateMsgLost;
 }
 
-export class Lot {
+export class Prize {
 
     constructor(name, description, price, quantity) {
         this.name = name;
@@ -143,7 +143,7 @@ export var CampaignStartList = [
         new GameSettings(1,
             1,
             'Game description example',
-            [new Lot("Lot 1", "Lot description 1", 10.1, "10")],
+            [new Prize("Prize 1", "Prize description 1", 10.1, "10")],
             "Game rules example",
             "example@game.com",
             'Example Game',

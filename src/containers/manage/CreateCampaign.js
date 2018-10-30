@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, CustomInput, Form, FormFeedback, FormGroup, Input, InputGroupAddon, Label, Row} from "reactstrap";
+import {Button, Col, CustomInput, Form, FormFeedback, FormGroup, Input, Label, Row} from "reactstrap";
 import CollapsibleTitle from "../../components/CollapsibleTitle";
 import Information from "../../components/Information";
 import {Icon} from '@mdi/react'

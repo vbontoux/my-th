@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Campaign from "../../Campaign";
+import CampaignForm from "./CampaignForm";
 
 class CampaignInfo extends Component {
     render() {
@@ -8,7 +9,7 @@ class CampaignInfo extends Component {
         console.debug("[MTH_C] Render campaign info: ", c);
         return (
             <div>
-                {c.id}
+                <CampaignForm campaign={c}/>
             </div>
         );
     }

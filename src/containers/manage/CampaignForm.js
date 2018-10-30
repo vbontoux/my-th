@@ -7,6 +7,7 @@ import {Icon} from '@mdi/react'
 import {mdiPlusCircle, mdiContentSave, mdiTreasureChest} from '@mdi/js'
 import Campaign from "../../Campaign";
 import CampaignFields from "./CampaignFields";
+import GameFields from "./GameFields";
 
 const experiencesTypes = ["Informatif", "Chasse / Parcour", "Vote"];
 const experiencesInformations = [
@@ -19,13 +20,6 @@ const campaignsInformations = [
     "Bot messenger description goes here",
     "Twitter description goes here",
     "E-Mail description goes here"];
-
-const gameType = ["Concours", "Tirage au sort", "Instants gagnants"];
-const gameInformations = [
-    "bien préciser l'ordre de distribution des lots aux vainqueurs.",
-    "parmi les emails participants, un tirage au sort est aléatoirement effectué automatiquement dans la minute suivant la fin de la campagne. L'email de victoire est automatiquement adressé aux gagnants.",
-    "pas de limite de participation perdante par défaut. Possibilité de paramétrer un délai fixe entre 2 participations."
-];
 
 //TODO use enums for checking types
 
@@ -58,7 +52,6 @@ class CampaignForm extends Component {
                 choices: campaignsTypes,
                 helps: campaignsInformations
             },
-            selectGameType: {value: (c) ? c.gameSettings.type : 0, choices: gameType, helps: gameInformations},
 
             open_interface_settings: false,
             indexImages: new ImageFieldInfos((c) ? "Séléctionnez au moins une image" : "Séléctionnez une image"), //TODO: Retrieving existing campaign files
@@ -79,14 +72,6 @@ class CampaignForm extends Component {
         selectCampaignType.value = e.target.value;
         this.setState({
             selectCampaignType
-        });
-    };
-
-    handleChangeGameType = (e) => {
-        const selectGameType = this.state.selectGameType;
-        selectGameType.value = e.target.value;
-        this.setState({
-            selectGameType
         });
     };
 
@@ -242,125 +227,7 @@ class CampaignForm extends Component {
                     </CollapsibleTitle>
                     <CampaignFields settings={c.campaignSettings}/>
                     {this.state.attachToGame &&
-                    <CollapsibleTitle title={<h4>Paramètres de jeu Click&Gain</h4>}>
-                        <Row form>
-                            <Col xs={12} xl={6}>
-                                <FormGroup>
-                                    <Label for="type-select">Type de jeu</Label>
-                                    <Input type="select" onChange={this.handleChangeGameType}
-                                           defaultValue={this.state.selectGameType.value}>
-                                        {this.state.selectGameType.choices.map(arrayToOptions)}
-                                    </Input>
-                                </FormGroup>
-                                <Information>
-                                    <span>{this.state.selectGameType.helps[this.state.selectGameType.value]}</span>
-                                </Information>
-                            </Col>
-                            <Col xs={12} xl={6}>
-                                <FormGroup>
-                                    <Label>Déscription</Label>
-                                    <Input type="textarea"
-                                           placeholder={"Description du jeu Click&Gain"}/>
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                        <Row form>
-                            <Col xs={12} xl={6}>
-                                <CollapsibleTitle title={<h5>Lots</h5>} isOpen>
-                                    <CollapsibleTitle title={<h6>Lot n°1</h6>} isOpen separator={false}
-                                                      style={{width: '90%', margin: 'auto'}}>
-                                        <Row style={{margin: 'auto'}}>
-                                            <Col>
-                                                <Row>
-                                                    <Col>
-                                                        <FormGroup>
-                                                            <Input placeholder={"Nom du lot n°1"}/>
-                                                        </FormGroup>
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col>
-                                                        <FormGroup>
-                                                            <Input type="textarea"
-                                                                   placeholder={"Déscription du lot n°1"}/>
-                                                        </FormGroup>
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col xs={4}>
-                                                        <FormGroup>
-                                                            <Input type="number" placeholder={"Qté"}/>
-                                                        </FormGroup>
-                                                    </Col>
-                                                    <Col xs={8}>
-                                                        <FormGroup>
-                                                            <Input type="number" step={0.01}
-                                                                   placeholder={"Prix (TTC)"}/>
-                                                        </FormGroup>
-                                                    </Col>
-                                                </Row>
-                                            </Col>
-                                        </Row>
-                                    </CollapsibleTitle>
-                                    <Button outline block style={{width: '90%', margin: 'auto'}} color={"primary"}
-                                            disabled>
-                                        <div style={{
-                                            width: "8em",
-                                            margin: 'auto',
-                                            display: 'flex',
-                                            justifyContent: 'space-between'
-                                        }}>
-                                            <div>
-                                                Ajouter un lot
-                                            </div>
-                                            <Icon path={mdiPlusCircle} size={1}/>
-                                        </div>
-                                    </Button>
-                                </CollapsibleTitle>
-                            </Col>
-                            <Col xs={12} xl={6}>
-                                <FormGroup>
-                                    <Label>Règlement</Label>
-                                    <Input placeholder={"Lien vers le règlement du jeu"}/>
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                        <h5>Paramètre d'emails</h5>
-                        <Row form>
-                            <Col xs={12} xl={4}>
-                                <FormGroup>
-                                    <Label>Adresse</Label>
-                                    <Input type="email" placeholder={"Adresse email de l'expéditeur"}/>
-                                </FormGroup>
-                            </Col>
-                            <Col xs={12} xl={4}>
-                                <FormGroup>
-                                    <Label>Nom</Label>
-                                    <Input placeholder={"Nom de l'expéditeur"}/>
-                                </FormGroup>
-                            </Col>
-                            <Col xs={12} xl={4}>
-                                <FormGroup>
-                                    <Label>Objet</Label>
-                                    <Input placeholder={"Objets de l'email"}/>
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                        <Row form>
-                            <Col xs={12} xl={6}>
-                                <FormGroup>
-                                    <Label>Template email gagné</Label>
-                                    <Input type="textarea" placeholder={"Email adressé pour chaque gagnant."}/>
-                                </FormGroup>
-                            </Col>
-                            <Col xs={12} xl={6}>
-                                <FormGroup>
-                                    <Label>Template email perdu</Label>
-                                    <Input type="textarea" placeholder={"Email adressé pour chaque perdant."}/>
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                    </CollapsibleTitle>
+                        <GameFields settings={(c && c.gameSettings) ? c.gameSettings : null}/>
                     }
                     <Row>
                         <Col xs={8}>
@@ -400,15 +267,6 @@ class CampaignForm extends Component {
     }
 }
 
-function lzpad(obj, length) {
-    var str = obj;
-    if (typeof obj !== 'string')
-        str = obj.toString();
-    while (str.length < length)
-        str = '0' + str;
-    return str;
-}
-
 function FormatAndSplitDate(moment) {
     return [moment.format('YYYY-MM-DD'),
         moment.format('HH:mm:ss')]
@@ -426,7 +284,7 @@ export function areImage(files) {
     return false;
 }
 
-function arrayToOptions(e, i) {
+export function arrayToOptions(e, i) {
     return <option value={i}>{e}</option>
 }
 
