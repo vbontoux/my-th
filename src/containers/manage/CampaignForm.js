@@ -173,7 +173,7 @@ class CampaignForm extends Component {
                                 <FormGroup>
                                     <Label>Images à indexer</Label>
                                     <CustomInput type="file" label={this.state.indexImages.label}
-                                                 multiple={(c.campaignSettings.type === 1)}
+                                                 multiple={this.state.selectCampaignType.value === 1}
                                                  onChange={this.handleIndexImagesChange}
                                                  invalid={this.state.indexImages.errors}/>
                                     <FormFeedback
@@ -189,7 +189,7 @@ class CampaignForm extends Component {
                             <Col>
                                 <FormGroup>
                                     <Label>Email de contact</Label>
-                                    <Input type="email" placeholder={"exemple@dom.fr"} defaultValue={c.emailContact}/>
+                                    <Input type="email" placeholder={"exemple@dom.fr"} defaultValue={(c) ? c.emailContact: null}/>
                                 </FormGroup>
                             </Col>
                         </Row>
@@ -198,7 +198,7 @@ class CampaignForm extends Component {
                                 <FormGroup check>
                                     <Label check>
                                         <Input type="checkbox" onChange={this.handleGameCheckboxChange}
-                                               defaultValue={c.gameSettings != null} checked={this.state.attachToGame}/>
+                                               checked={this.state.attachToGame}/>
                                         Attacher ma campagne à un jeu Click&Gain
                                     </Label>
                                 </FormGroup>
@@ -225,9 +225,9 @@ class CampaignForm extends Component {
                         </Row>
                         }
                     </CollapsibleTitle>
-                    <CampaignFields settings={c.campaignSettings}/>
+                    <CampaignFields settings={(c) ? c.campaignSettings : this.state.selectCampaignType.value}/>
                     {this.state.attachToGame &&
-                    <GameFields settings={(c && c.gameSettings) ? c.gameSettings : null}/>
+                    <GameFields settings={(c) ? c.gameSettings : null}/>
                     }
                     <Row>
                         <Col xs={8}>
