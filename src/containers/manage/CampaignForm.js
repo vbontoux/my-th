@@ -227,7 +227,7 @@ class CampaignForm extends Component {
                     </CollapsibleTitle>
                     <CampaignFields settings={c.campaignSettings}/>
                     {this.state.attachToGame &&
-                        <GameFields settings={(c && c.gameSettings) ? c.gameSettings : null}/>
+                    <GameFields settings={(c && c.gameSettings) ? c.gameSettings : null}/>
                     }
                     <Row>
                         <Col xs={8}>

@@ -8,6 +8,7 @@ import {mdiPlusCircle} from '@mdi/js'
 import CollapsibleTitle from "../../components/CollapsibleTitle";
 import {arrayToOptions} from "./CampaignForm";
 import {GameSettings} from "../../Campaign";
+import PrizesFields from "./PrizesFields";
 
 const gameType = ["Concours", "Tirage au sort", "Instants gagnants"];
 const gameInformations = [
@@ -17,7 +18,6 @@ const gameInformations = [
 ];
 
 class GameFields extends Component {
-
 
     constructor(props) {
         super(props);
@@ -69,57 +69,7 @@ class GameFields extends Component {
                 {/*TODO: Recover prizes list*/}
                 <Row form>
                     <Col xs={12} xl={6}>
-                        <CollapsibleTitle title={<h5>Lots</h5>} isOpen>
-                            <CollapsibleTitle title={<h6>Lot n°1</h6>} isOpen separator={false}
-                                              style={{width: '90%', margin: 'auto'}}>
-                                <Row style={{margin: 'auto'}}>
-                                    <Col>
-                                        <Row>
-                                            <Col>
-                                                <FormGroup>
-                                                    <Input placeholder={"Nom du lot n°1"}/>
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col>
-                                                <FormGroup>
-                                                    <Input type="textarea"
-                                                           placeholder={"Déscription du lot n°1"}/>
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col xs={4}>
-                                                <FormGroup>
-                                                    <Input type="number" placeholder={"Qté"}/>
-                                                </FormGroup>
-                                            </Col>
-                                            <Col xs={8}>
-                                                <FormGroup>
-                                                    <Input type="number" step={0.01}
-                                                           placeholder={"Prix (TTC)"}/>
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                    </Col>
-                                </Row>
-                            </CollapsibleTitle>
-                            <Button outline block style={{width: '90%', margin: 'auto'}} color={"primary"}
-                                    disabled>
-                                <div style={{
-                                    width: "8em",
-                                    margin: 'auto',
-                                    display: 'flex',
-                                    justifyContent: 'space-between'
-                                }}>
-                                    <div>
-                                        Ajouter un lot
-                                    </div>
-                                    <Icon path={mdiPlusCircle} size={1}/>
-                                </div>
-                            </Button>
-                        </CollapsibleTitle>
+                            <PrizesFields prizes={(s) ? s.prizes : null}/>
                     </Col>
                     <Col xs={12} xl={6}>
                         <FormGroup>
