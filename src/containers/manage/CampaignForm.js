@@ -1,27 +1,18 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Button, Col, CustomInput, Form, FormFeedback, FormGroup, Input, InputGroupAddon, Label, Row} from "reactstrap";
+import {Button, Col, CustomInput, Form, FormFeedback, FormGroup, Input, Label, Row} from "reactstrap";
 import CollapsibleTitle from "../../components/CollapsibleTitle";
 import Information from "../../components/Information";
 import {Icon} from '@mdi/react'
-import {mdiPlusCircle, mdiContentSave, mdiTreasureChest} from '@mdi/js'
-import Campaign from "../../Campaign";
-import CampaignFields from "./CampaignFields";
+import {mdiContentSave, mdiTreasureChest} from '@mdi/js'
+import Campaign, {ExperienceTypes, getObject, InterfaceTypes} from "../../Campaign";
+import InterfaceFields from "./interfaceFields";
 import GameFields from "./GameFields";
 
-const experiencesTypes = ["Informatif", "Chasse / Parcour", "Vote"];
 const experiencesInformations = [
     "l'utilisateur est invité à adresser une photo pour recevoir de l'information, accompagnée éventuellement d'un incentive (coupon, jeu...).",
-    "l'utilisateur est lancé dans la recherche d'une ou de plusieurs images. Il sera récompensé à l'achèvement de son parcours.",
-    "l'utilisateur exprime un choix par l'envoi d'une image. Un vote multiple est permis (voter pour plusieurs images sur un choix large) mais un vote répété sur une même image n'est comptabilisé qu'une seule fois. Les résultats du vote peuvent en temps réel être intégrés dans l'email de retour ou dans une page qui sera affichée sur le web ou sur un grand écran lors d'un événement."];
-
-const campaignsTypes = ['Bot Messenger', "Twitter", "Email"];
-const campaignsInformations = [
-    "Bot messenger description goes here",
-    "Twitter description goes here",
-    "E-Mail description goes here"];
-
-//TODO use enums for checking types
+    "l'utilisateur exprime un choix par l'envoi d'une image. Un vote multiple est permis (voter pour plusieurs images sur un choix large) mais un vote répété sur une même image n'est comptabilisé qu'une seule fois. Les résultats du vote peuvent en temps réel être intégrés dans l'email de retour ou dans une page qui sera affichée sur le web ou sur un grand écran lors d'un événement.",
+    "l'utilisateur est lancé dans la recherche d'une ou de plusieurs images. Il sera récompensé à l'achèvement de son parcours."];
 
 export class ImageFieldInfos {
 
@@ -40,18 +31,22 @@ class CampaignForm extends Component {
 
     constructor(props) {
         super(props);
-        var c = this.props.campaign;
+        let c = this.props.campaign;
+        let checkboxes = []
+        for (let i = 0; i < Object.keys(InterfaceTypes).length; i++) {
+            if (c && c.interfaceSettings.find((settings) => settings.type.value === i))
+                checkboxes.push(true);
+            else
+                checkboxes.push(false);
+        }
+
         this.state = {
             selectExperience: {
-                value: (c) ? c.experienceSettings.type : 0,
-                choices: experiencesTypes,
+                type: (c) ? c.experienceSettings.type : ExperienceTypes.SIMPLE_IMAGE,
                 helps: experiencesInformations
             },
-            selectCampaignType: {
-                value: (c) ? c.campaignSettings.type : 0,
-                choices: campaignsTypes,
-                helps: campaignsInformations
-            },
+            interfaces: (c) ? c.interfacesTypes : [InterfaceTypes.FACEBOOK],
+            checkBoxes: checkboxes,
 
             open_interface_settings: false,
             indexImages: new ImageFieldInfos((c) ? "Séléctionnez au moins une image" : "Séléctionnez une image"), //TODO: Retrieving existing campaign files
@@ -60,18 +55,10 @@ class CampaignForm extends Component {
     }
 
     handleChangeExperience = (e) => {
-        const selectExperience = this.state.selectExperience;
-        selectExperience.value = e.target.value;
+        let selectExperience = this.state.selectExperience;
+        selectExperience.type = ExperienceTypes[e.target.value];
         this.setState({
-            selectExperience
-        });
-    };
-
-    handleChangeCampaignType = (e) => {
-        const selectCampaignType = this.state.selectCampaignType;
-        selectCampaignType.value = e.target.value;
-        this.setState({
-            selectCampaignType
+            selectExperience: selectExperience
         });
     };
 
@@ -94,10 +81,50 @@ class CampaignForm extends Component {
         }
     };
 
+    handleInterfaceCheckboxChange = (e, val) => {
+        let int = this.state.interfaces;
+        if (!e.target.checked) {
+            //Remove value from settings array if unchecked
+            int = int.filter((type) => {
+                return type && type.value !== val
+            });
+        }
+        else if (e.target.checked) {
+            //Add value to settings array if unchecked
+            int.push(getObject(InterfaceTypes, val));
+        }
+
+        //Edit checkbox states
+        //Disable warning for simplicity
+        // eslint-disable-next-line react/no-direct-mutation-state
+        this.state.checkBoxes[val] = e.target.checked;
+
+        this.setState({
+            interfaces: int
+        });
+    };
+
     handleGameCheckboxChange = (e) => {
         this.setState({
             attachToGame: (e.target.checked)
         });
+    };
+
+    interfacesSettingsToCheckbox = () => {
+        let ret = [];
+
+        for (let [key, type] of Object.entries(InterfaceTypes)) {
+            ret.push(
+                <FormGroup check key={key}>
+                    <Label check>
+                        <Input type="checkbox" id={`interface_${key}`}
+                               checked={this.state.checkBoxes[type.value]}
+                               onChange={(e) => this.handleInterfaceCheckboxChange(e, type.value)}/>
+                        {type.name}
+                    </Label>
+                </FormGroup>)
+        }
+        return ret;
     };
 
     render() {
@@ -147,8 +174,8 @@ class CampaignForm extends Component {
                                 <FormGroup>
                                     <Label for="type-select">Type d'expérience</Label>
                                     <Input type="select" onChange={this.handleChangeExperience}
-                                           defaultValue={this.state.selectExperience.value} disabled={(c != null)}>
-                                        {this.state.selectExperience.choices.map(arrayToOptions)}
+                                           defaultValue={this.state.selectExperience.type.value} disabled={(c != null)}>
+                                        {typeEnumToOption(ExperienceTypes)}
                                     </Input>
                                 </FormGroup>
                                 <Information>
@@ -156,16 +183,7 @@ class CampaignForm extends Component {
                                 </Information>
                             </Col>
                             <Col xs={6}>
-                                <FormGroup>
-                                    <Label for="type-select">Type de campagne</Label>
-                                    <Input type="select" onChange={this.handleChangeCampaignType}
-                                           defaultValue={this.state.selectCampaignType.value} disabled>
-                                        {this.state.selectCampaignType.choices.map(arrayToOptions)}
-                                    </Input>
-                                </FormGroup>
-                                <Information>
-                                    <span>{this.state.selectCampaignType.helps[this.state.selectCampaignType.value]}</span>
-                                </Information>
+                                {this.interfacesSettingsToCheckbox()}
                             </Col>
                         </Row>
                         <Row form>
@@ -173,9 +191,10 @@ class CampaignForm extends Component {
                                 <FormGroup>
                                     <Label>Images à indexer</Label>
                                     <CustomInput type="file" label={this.state.indexImages.label}
-                                                 multiple={this.state.selectCampaignType.value === 1}
+                                                 multiple={this.state.selectExperience.type === ExperienceTypes.HUNT}
                                                  onChange={this.handleIndexImagesChange}
-                                                 invalid={this.state.indexImages.errors}/>
+                                                 invalid={this.state.indexImages.errors}
+                                                id={"index_images"}/>
                                     <FormFeedback
                                         style={{display: (this.state.indexImages.errors) ? "block" : "none"}}>{this.state.indexImages.errors}</FormFeedback>
                                 </FormGroup>
@@ -189,7 +208,8 @@ class CampaignForm extends Component {
                             <Col>
                                 <FormGroup>
                                     <Label>Email de contact</Label>
-                                    <Input type="email" placeholder={"exemple@dom.fr"} defaultValue={(c) ? c.emailContact: null}/>
+                                    <Input type="email" placeholder={"exemple@dom.fr"}
+                                           defaultValue={(c) ? c.emailContact : null}/>
                                 </FormGroup>
                             </Col>
                         </Row>
@@ -225,7 +245,7 @@ class CampaignForm extends Component {
                         </Row>
                         }
                     </CollapsibleTitle>
-                    <CampaignFields settings={(c) ? c.campaignSettings : this.state.selectCampaignType.value}/>
+                    <InterfaceFields settings={(c) ? c.interfaceSettings : null} types={this.state.interfaces}/>
                     {this.state.attachToGame &&
                     <GameFields settings={(c) ? c.gameSettings : null}/>
                     }
@@ -284,10 +304,13 @@ export function areImage(files) {
     return false;
 }
 
-export function arrayToOptions(e, i) {
-    return <option value={i}>{e}</option>
+export function typeEnumToOption(Enum) {
+    let ret = [];
+    for (let [, val] of Object.entries(Enum)) {
+        ret.push(<option value={val.value} key={val.value}>{val.name}</option>)
+    }
+    return ret;
 }
-
 
 CampaignForm.propTypes = {campaign: PropTypes.instanceOf(Campaign)};
 

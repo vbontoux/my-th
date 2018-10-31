@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {Icon} from '@mdi/react'
 import {mdiWorker} from "@mdi/js";
 

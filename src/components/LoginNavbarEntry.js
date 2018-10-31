@@ -1,6 +1,5 @@
 import React from "react";
-import {NavItem, NavLink} from "reactstrap";
-import {Popover, PopoverHeader, PopoverBody} from "reactstrap";
+import {NavItem, NavLink, Popover, PopoverBody, PopoverHeader} from "reactstrap";
 import LoginForm from "./loginForm";
 
 export default class LoginNavbarEntry extends React.Component {

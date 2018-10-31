@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Prize} from "../../Campaign";
-import {Row, Col, FormGroup, Input} from "reactstrap";
+import {Col, FormGroup, Input, Row} from "reactstrap";
 import CollapsibleTitle from "../../components/CollapsibleTitle";
 
 class PrizeFields extends Component {

@@ -6,7 +6,7 @@ import {mdiMenuLeft} from '@mdi/js'
 import "../styles/CollapsibleTitle.css"
 import "../styles/utils.css"
 
-import {Badge, Button, Collapse} from "reactstrap";
+import {Badge, Collapse} from "reactstrap";
 
 class CollapsibleTitle extends Component {
     constructor(props) {
@@ -36,6 +36,7 @@ class CollapsibleTitle extends Component {
                     {(typeof this.props.title === "string") ? <h2>{this.props.title}</h2> : this.props.title}
                     {this.props.notification &&
                     <Badge color="danger" className="collapsible-notif">{this.props.notification}</Badge>}
+                    {this.props.icon &&
                     <Icon className="collapsible-icon" path={this.props.icon}
                           size={this.props.icon_size} color={this.props.icon_color}
                           style={{
@@ -44,7 +45,7 @@ class CollapsibleTitle extends Component {
                               WebkitTransform: `rotate(${this.state.rotation}deg)`
                           }
                           }
-                    />
+                    />}
                 </div>
                 <Collapse className="collapsible-content" isOpen={this.state.openedCollapsible}>
                     {this.props.children}

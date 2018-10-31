@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {FacebookSettings} from "../../Campaign";
-import {Row, Col, FormGroup, Label, Input, FormFeedback, CustomInput} from "reactstrap";
+import {Col, CustomInput, FormFeedback, FormGroup, Input, Label, Row} from "reactstrap";
 import CollapsibleTitle from "../../components/CollapsibleTitle";
 import {areImage, ImageFieldInfos} from "./CampaignForm";
 
@@ -73,7 +73,8 @@ class FacebookFields extends Component {
                         <FormGroup>
                             <Label>Images premier message</Label>
                             <CustomInput type="file" label={this.state.firstMessageImage.label}
-                                         multiple onChange={this.handleFirstMessageImagesChange}/>
+                                         multiple onChange={this.handleFirstMessageImagesChange}
+                                         id={"first_message_image"}/>
                             <FormFeedback
                                 style={{display: (this.state.firstMessageImage.errors) ? "block" : "none"}}>{this.state.firstMessageImage.errors}</FormFeedback>
                         </FormGroup>

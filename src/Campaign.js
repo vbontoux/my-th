@@ -1,9 +1,61 @@
 import moment from "moment";
 
+export const ExperienceTypes = Object.freeze({
+    SIMPLE_IMAGE: {
+        value: 0,
+        name: "Simple Image Matching"
+    },
+    VOTE: {
+        value: 1,
+        name: "Vote"
+    },
+    HUNT: {
+        value: 2,
+        name: "Treasure hunt"
+    }
+});
+
+export const InterfaceTypes = Object.freeze({
+    FACEBOOK: {
+        value: 0,
+        name: "Bot Messenger"
+    },
+    TWITTER: {
+        value: 1,
+        name: "Twitter"
+    },
+    EMAIL: {
+        value: 2,
+        name: "E-Mail"
+    }
+});
+
+export const GameTypes = Object.freeze({
+    "SWEEPSTAKE": {
+        value: 0,
+        name: "Sweepstake"
+    },
+    "INSTANTWIN": {
+        value: 1,
+        name: "Instant win"
+    },
+    "RACE": {
+        value: 2,
+        name: "Race"
+    }
+});
+
+export const getObject = (Enum, val) => {
+    for (let[key, type] of Object.entries(Enum)) {
+        if (type.value === val) {
+            return Enum[key]
+        }
+    }
+    return null;
+}
+
 export default class Campaign {
-
-
-    constructor(id, author, start, end, idxImage, emailContact, experienceSettings, campaignSettings, gameSettings) {
+    constructor(id, name, status, author, start, end, idxImage, emailContact, experienceSettings, campaignSettings, gameSettings) {
         this.id = id;
         this.author = author;
         this.start = start;
@@ -11,10 +63,12 @@ export default class Campaign {
         this.idxImage = idxImage;
         this.emailContact = emailContact;
         this.experienceSettings = experienceSettings;
-        this.campaignSettings = campaignSettings;
+        this.interfaceSettings = campaignSettings;
         this.gameSettings = gameSettings;
     }
 
+    name;
+    status;
     id;
     author;
     start;
@@ -22,70 +76,75 @@ export default class Campaign {
     idxImage = [];
     emailContact;
     experienceSettings;
-    campaignSettings;
+    interfaceSettings = [];
     gameSettings;
+
+    get interfacesTypes() {
+        return this.interfaceSettings.map(e => e.type);
+    }
 }
 
 export class Settings {
 
     constructor(type) {
-        this.type = type;
+        this._type = type;
     };
 
-    get verboseType() {
-        return this.verboseTypes[this.type]
+    get typeName() {
+        return this.type.name
     };
 
-    type = null;
-    static verboseTypes = ['1', '2', '3'];
-}
-
-export class CampaignSettings extends Settings {
-    static verboseTypes = ["Informatif", "Chasse / Parcour", "Vote"];
-}
-export class FacebookSettings extends CampaignSettings {
-
-        constructor(page, msgFirst, imgMsgFirst, msgFinal, msgAnalysis, msgDefault) {
-            super(0);
-            this.page = page;
-            this.msgFirst = msgFirst;
-            this.imgMsgFirst = imgMsgFirst;
-            this.msgFinal = msgFinal;
-            this.msgAnalysis = msgAnalysis;
-            this.msgDefault = msgDefault;
-        }
-
-        page;
-        msgFirst;
-        imgMsgFirst;
-        msgFinal;
-        msgAnalysis;
-        msgDefault;
+    get typeValue() {
+        return this.type.value
     }
+
+    get type() {
+        return this._type;
+    }
+
+    _type = null;
+}
+
+export class InterfaceSettings extends Settings {
+}
+
+export class FacebookSettings extends InterfaceSettings {
+
+    constructor(page, msgFirst, imgMsgFirst, msgFinal, msgAnalysis, msgDefault) {
+        super(InterfaceTypes.FACEBOOK);
+        this.page = page;
+        this.msgFirst = msgFirst;
+        this.imgMsgFirst = imgMsgFirst;
+        this.msgFinal = msgFinal;
+        this.msgAnalysis = msgAnalysis;
+        this.msgDefault = msgDefault;
+    }
+
+    page;
+    msgFirst;
+    imgMsgFirst;
+    msgFinal;
+    msgAnalysis;
+    msgDefault;
+}
 
 export class ExperienceSettings extends Settings {
-
-    static verboseTypes = ["Informatif", "Chasse / Parcour", "Vote"];
-
 }
+
 export class HuntSettings extends ExperienceSettings {
-
-        constructor(collectCount, templateMatch, templateMatchEnd) {
-            super(2);
-            this.collectCount = collectCount;
-            this.templateMatch = templateMatch;
-            this.templateMatchEnd = templateMatchEnd;
-        }
-
-        collectCount;
-        msgMatch;
-        msgMatchEnd;
+    constructor(collectCount, templateMatch, templateMatchEnd) {
+        super(ExperienceTypes.HUNT);
+        this.collectCount = collectCount;
+        this.templateMatch = templateMatch;
+        this.templateMatchEnd = templateMatchEnd;
     }
 
+    collectCount;
+    msgMatch;
+    msgMatchEnd;
+}
+
 export class GameSettings extends Settings {
-
-    static verboseTypes = ["Concours", "Tirage au sort", "Instants gagnants"];
-
     constructor(type, id, description, prizes, rules, addressEmailFrom, nameEmailFrom, objectEmailFrom, templateMsgWon,
                 templateMsgLost) {
         super(type);
@@ -128,20 +187,22 @@ export class Prize {
 
 export var CampaignStartList = [
     new Campaign(1,
+        "Live campaign",
+        "live",
         "eu-west-1:9632e005-71d0-4c2b-a756-61add1005133",
         new moment("10/1/18 00:00"),
         new moment("10/31/18 23:59"),
         [],
         "thibaut.cens@gmail.com",
-        new ExperienceSettings(1),
-        new FacebookSettings("https://www.facebook.com",
+        new ExperienceSettings(ExperienceTypes.SIMPLE_IMAGE),
+        [new FacebookSettings("https://www.facebook.com",
             "First Message Example",
             null,
             "Final Message Example",
             "Analysis Message Example",
-            "Default Message Example"),
-        new GameSettings(1,
-            1,
+            "Default Message Example")],
+        new GameSettings(GameTypes.INSTANTWIN,
+            "game_1337",
             'Game description example',
             [new Prize("Prize 1", "Prize description 1", 10.1, "10")],
             "Game rules example",

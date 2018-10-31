@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import Campaign, * as campaign from '../../Campaign'
-import {withRouter} from 'react-router-dom'
+import Campaign from '../../Campaign'
 
 import PropTypes from 'prop-types';
 import e404 from "../e404";

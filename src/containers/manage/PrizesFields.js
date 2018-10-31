@@ -12,9 +12,6 @@ class PrizesFields extends Component {
 
     constructor(props) {
         super(props);
-
-        console.log(this.props.prizes);
-
         this.state = {
             prizes: (this.props.prizes) ? this.props.prizes : [null]
         }
@@ -30,12 +27,10 @@ class PrizesFields extends Component {
         var ret = [];
         if (this.state.prizes && this.state.prizes.length > 0)
             for (let i = 0; i < this.state.prizes.length; i++) {
-                ret.push(<PrizeFields prize={this.state.prizes[i]} id={i + 1}/>)
+                ret.push(<PrizeFields prize={this.state.prizes[i]} id={i + 1} key={i + 1}/>)
             }
         else
             this.setState({prizes: [null]});
-
-        console.log(ret);
 
         return (
             <CollapsibleTitle title={<h5>Lots</h5>} isOpen>
