@@ -7,6 +7,7 @@ import {mdiFacebookMessenger, mdiTwitter, mdiEmail, mdiAlert, mdiPen, mdiTrashCa
 import Campaign, {InterfaceTypes} from "../../Campaign";
 
 import "../../styles/ListCampaigns.css"
+import {Link} from "react-router-dom";
 
 class ListCampaigns extends Component {
     render() {
@@ -84,7 +85,7 @@ class ListTableEntry extends Component {
                     <td>TODO</td>
                     <td>TODO</td>
                     <td>{c.gameSettings.typeName}</td>
-                    <td><Button><Icon path={mdiPen} color={"#ffffff"} size={1}/></Button></td>
+                    <td><Link to={`/manage/${c.id}`}><Button><Icon path={mdiPen} color={"#ffffff"} size={1}/></Button></Link></td>
                     <td><Button outline color={"danger"}><Icon path={mdiTrashCan} color={"#ffffff"} size={1}/></Button></td>
                 </tr>
             );
