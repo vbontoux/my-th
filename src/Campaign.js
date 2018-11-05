@@ -57,6 +57,8 @@ export const getObject = (Enum, val) => {
 export default class Campaign {
     constructor(id, name, status, author, start, end, idxImage, emailContact, experienceSettings, campaignSettings, gameSettings) {
         this.id = id;
+        this.name = name;
+        this.status = status;
         this.author = author;
         this.start = start;
         this.end = end;

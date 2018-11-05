@@ -8,8 +8,10 @@ class InterfaceFields extends Component {
 
     render() {
         let ret = [];
+        let sObject = null;
         this.props.types.forEach((type) => {
-            let sObject = this.props.settings.find(setting => setting.type === type);
+            if (this.props.settings)
+                sObject = this.props.settings.find(setting => setting.type === type);
 
             switch (type) {
                 case InterfaceTypes.FACEBOOK:

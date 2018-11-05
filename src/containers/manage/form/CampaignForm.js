@@ -39,6 +39,8 @@ class CampaignForm extends Component {
             else
                 checkboxes.push(false);
         }
+        if (!c)
+            checkboxes[InterfaceTypes.FACEBOOK.value] = true;
 
         this.state = {
             selectExperience: {

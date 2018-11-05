@@ -3,11 +3,14 @@ import {Icon} from '@mdi/react'
 import {mdiWorker} from "@mdi/js";
 
 import "../../styles/utils.css"
+import ListCampaigns from "./List Campaigns";
+import {CampaignStartList} from "../../Campaign";
 
 class ManageCampaignHome extends Component {
     render() {
         return (
-            <div id="notFound">
+            <div id="manageHome">
+                <ListCampaigns list={CampaignStartList}/>
                 <div>
                     <div className="test_text" style={{paddingTop: "100px"}}>
                         <h1>Work in progress</h1>
