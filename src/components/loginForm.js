@@ -3,11 +3,10 @@ import {Icon} from "@mdi/react"
 import {mdiFacebook} from "@mdi/js"
 import {Auth} from "aws-amplify";
 import {urls} from "../config"
+import {connect} from "react-redux";
 
 import ButtonSpinable from "./ButtonSpinable";
-import {connect} from "react-redux";
-import {UserInfos} from "../classes/User";
-import User from "../classes/User";
+import {stateToUserProps} from "../reducers/user";
 
 export class LoginForm extends React.Component {
 
@@ -32,7 +31,7 @@ export class LoginForm extends React.Component {
             console.debug("[AWS_Cogn] Connection success.", credentials);
             this.setConnecting();
             Auth.currentAuthenticatedUser().then(user => {
-                this.props.dispatch({type: "Login", userData: {test: true}})
+                this.props.dispatch({type: "LOGIN", userData: user})
             });
         }).catch(e => {
             console.error("[AWS_Cogn] " + e);
@@ -64,21 +63,15 @@ export class LoginForm extends React.Component {
     render() {
         return (
             <div id="loginForm">
-                    <ButtonSpinable color="primary" className="facebookButton" block
-                                    loading={this.state.connecting}
-                                    onClick={this.fbLogin}>
-                        <Icon path={mdiFacebook}
-                              size={1}/>
-                    </ButtonSpinable>
+                <ButtonSpinable color="primary" className="facebookButton" block
+                                loading={this.state.connecting}
+                                onClick={this.fbLogin}>
+                    <Icon path={mdiFacebook}
+                          size={1}/>
+                </ButtonSpinable>
             </div>
         );
     }
 }
 
-function stateToProps(state) {
-    return {
-        user: state.user
-    };
-}
-
-export default connect(stateToProps) (LoginForm);
+export default connect(stateToUserProps)(LoginForm);

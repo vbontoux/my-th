@@ -7,14 +7,16 @@ import {Link} from "react-router-dom";
 //Config
 import {urls, facebookAppID} from './config'
 
-//Personal
-import AccountNavbarEntry from "./components/AccountNavbarEntry";
-import LoginNavbarEntry from "./components/LoginNavbarEntry";
+//Perso
+import {store} from "./index";
 
 //CSS
 import './App.css';
 import './styles/utils.css'
 import './styles/loginPopoverStyle.css'
+import UserNavItem from "./components/UserNavItem";
+import {connect} from "react-redux";
+import {stateToUserProps} from "./reducers/user";
 
 
 class App extends Component {
@@ -22,7 +24,6 @@ class App extends Component {
         super(props);
 
         this.state = {
-            user: {isAuthenticated: false},
             openedSidenav: false
         };
     }
@@ -48,9 +49,10 @@ class App extends Component {
         }(document, 'script', 'facebook-jssdk'));
 
         try {
-            if (!this.state.user.isAuthenticated)
+            const state = store.getState();
+            if (!state.user.isAuthenticated)
                 await Auth.currentAuthenticatedUser().then(user => {
-                    this.authenticateUser(user);
+                    store.dispatch({type: "LOGIN", userData: user})
                 });
         }
         catch (e) {
@@ -61,41 +63,24 @@ class App extends Component {
         this.setState({isAuthenticating: false})
     }
 
-    logoutHandler = async () => {
-        console.debug("[DEBUG] MTH - AWS Cognito: User logout.");
-        await Auth.signOut()
-            .then(() => {
-                this.authenticateUser(null);
-            })
-            .catch(e => {
-                console.error(e);
-            });
-    };
-
     render() {
         return (
             !this.state.isAuthenticating &&
             <div className="appWrapper" id="App">
                 <Navbar color="light" light expand="md">
-                    <NavbarBrand>
-                        <Link to={"/"}>
-                            <img alt="logo my-TreasureHunt"
-                                 src="https://my-treasurehunt.com/assets/images/logositethmaj2017-430x90.jpg"
-                                 style={{maxHeight: "50px", margin: "none"}}/>
-                        </Link>
-                    </NavbarBrand>
+                    <Link to={"/"}>
+                        <img alt="logo my-TreasureHunt"
+                             src="https://my-treasurehunt.com/assets/images/logositethmaj2017-430x90.jpg"
+                             style={{maxHeight: "50px", margin: "none"}}/>
+                    </Link>
                     <NavbarToggler onClick={() => {
                         this.setState({openedSidenav: !this.state.openedSidenav});
                     }}/>
                     <Collapse navbar style={{paddingRight: "5em"}} isOpen={this.state.openedSidenav}>
                         <Nav className="ml-auto main-navbar" navbar>
-                            <NavItem><NavLink><Link to={"/"}>About us</Link></NavLink></NavItem>
-                            <NavItem><NavLink><Link to={"/manage"}>Manage your campaigns</Link></NavLink></NavItem>
-                            {this.state.user.isAuthenticated ?
-                                <AccountNavbarEntry onLogout={this.logoutHandler} user={this.state.user}/>
-                                :
-                                <LoginNavbarEntry/>
-                            }
+                            <NavItem><Link to={"/"}>About us</Link></NavItem>
+                            <NavItem><Link to={"/manage"}>Manage your campaigns</Link></NavItem>
+                            <UserNavItem/>
                         </Nav>
                     </Collapse>
                 </Navbar>
@@ -105,4 +90,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default connect(stateToUserProps) (App);

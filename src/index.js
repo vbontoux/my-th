@@ -13,7 +13,7 @@ import App from './App';
 import reducer from './reducers'
 
 
-const store = createStore(reducer);
+export const store = createStore(reducer);
 
 Amplify.configure({
     Auth: {

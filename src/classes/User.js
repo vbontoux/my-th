@@ -20,6 +20,14 @@ export default class User {
     static logout() {
         return new User();
     }
+
+    login(userInfos) {
+        return new User(userInfos);
+    }
+
+    logout() {
+        return new User();
+    }
 }
 
 export class UserInfos {
