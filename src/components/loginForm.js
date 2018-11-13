@@ -5,14 +5,16 @@ import {Auth} from "aws-amplify";
 import {urls} from "../config"
 
 import ButtonSpinable from "./ButtonSpinable";
+import {connect} from "react-redux";
+import {UserInfos} from "../classes/User";
+import User from "../classes/User";
 
-export default class LoginForm extends React.Component {
+export class LoginForm extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            onLogin: props.onLogin,
             connecting: false
         }
     };
@@ -30,7 +32,7 @@ export default class LoginForm extends React.Component {
             console.debug("[AWS_Cogn] Connection success.", credentials);
             this.setConnecting();
             Auth.currentAuthenticatedUser().then(user => {
-                this.state.onLogin(user)
+                this.props.dispatch({type: "Login", userData: {test: true}})
             });
         }).catch(e => {
             console.error("[AWS_Cogn] " + e);
@@ -72,3 +74,11 @@ export default class LoginForm extends React.Component {
         );
     }
 }
+
+function stateToProps(state) {
+    return {
+        user: state.user
+    };
+}
+
+export default connect(stateToProps) (LoginForm);

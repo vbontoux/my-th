@@ -2,28 +2,27 @@ import React, {Component} from 'react';
 import Routes from './Routes'
 import {Auth} from 'aws-amplify'
 import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from 'reactstrap'
+import {Link} from "react-router-dom";
 
+//Config
 import {urls, facebookAppID} from './config'
 
+//Personal
 import AccountNavbarEntry from "./components/AccountNavbarEntry";
 import LoginNavbarEntry from "./components/LoginNavbarEntry";
 
+//CSS
 import './App.css';
 import './styles/utils.css'
 import './styles/loginPopoverStyle.css'
-import {Link} from "react-router-dom";
 
-export const UserContext = React.createContext(null);
 
 class App extends Component {
     constructor(props) {
         super(props);
 
-        this.toggleLoginPopover = this.toggleLoginPopover.bind(this);
         this.state = {
-            loginPopoverOpen: false,
             user: {isAuthenticated: false},
-            isAuthenticating: true,
             openedSidenav: false
         };
     }
@@ -62,16 +61,6 @@ class App extends Component {
         this.setState({isAuthenticating: false})
     }
 
-    authenticateUser = authenticated => {
-        //TODO Sanitize input
-        if (authenticated) {
-            this.setState({user: {isAuthenticated: true, ...authenticated}});
-            console.debug("[DEBUG] MTH - AWS Cognito: User authentication", authenticated);
-        }
-        else
-            this.setState({user: {isAuthenticated: false}})
-    };
-
     logoutHandler = async () => {
         console.debug("[DEBUG] MTH - AWS Cognito: User logout.");
         await Auth.signOut()
@@ -82,12 +71,6 @@ class App extends Component {
                 console.error(e);
             });
     };
-
-    toggleLoginPopover() {
-        this.setState({
-            loginPopoverOpen: !this.state.loginPopoverOpen
-        });
-    }
 
     render() {
         return (
@@ -111,14 +94,12 @@ class App extends Component {
                             {this.state.user.isAuthenticated ?
                                 <AccountNavbarEntry onLogout={this.logoutHandler} user={this.state.user}/>
                                 :
-                                <LoginNavbarEntry onLogin={this.authenticateUser}/>
+                                <LoginNavbarEntry/>
                             }
                         </Nav>
                     </Collapse>
                 </Navbar>
-                <UserContext.Provider>
-                    <Routes match={this.props.match}/>
-                </UserContext.Provider>
+                <Routes match={this.props.match}/>
             </div>
         );
     }

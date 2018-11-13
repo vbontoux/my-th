@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Campaign from "../../Campaign";
-import CampaignForm from "./CampaignForm";
+import Campaign from "classes/Campaign";
+import CampaignForm from "./form/CampaignForm";
 
 class CampaignInfo extends Component {
     render() {

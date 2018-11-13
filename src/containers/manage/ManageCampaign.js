@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Campaign from '../../Campaign'
+import Campaign from '../../classes/Campaign'
 
 import PropTypes from 'prop-types';
 import e404 from "../e404";

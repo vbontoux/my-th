@@ -4,7 +4,7 @@ import {Button, Table} from "reactstrap";
 import {Icon} from '@mdi/react'
 import {mdiFacebookMessenger, mdiTwitter, mdiEmail, mdiAlert, mdiPen, mdiTrashCan} from '@mdi/js'
 
-import Campaign, {InterfaceTypes} from "../../Campaign";
+import Campaign, {InterfaceTypes} from "../../classes/Campaign";
 
 import "../../styles/ListCampaigns.css"
 import {Link} from "react-router-dom";

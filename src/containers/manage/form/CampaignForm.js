@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Button, Col, CustomInput, Form, FormFeedback, FormGroup, Input, Label, Row} from "reactstrap";
-import CollapsibleTitle from "../../components/CollapsibleTitle";
-import Information from "../../components/Information";
+import CollapsibleTitle from "components/CollapsibleTitle";
+import Information from "components/Information";
 import {Icon} from '@mdi/react'
 import {mdiContentSave, mdiTreasureChest} from '@mdi/js'
-import Campaign, {ExperienceTypes, getObject, InterfaceTypes} from "../../Campaign";
+import Campaign, {ExperienceTypes, getObject, InterfaceTypes} from "classes/Campaign";
 import InterfaceFields from "./interfaceFields";
 import GameFields from "./GameFields";
 

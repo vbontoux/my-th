@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import CampaignForm from "./CampaignForm";
+import CampaignForm from "./form/CampaignForm";
 
 
 class CreateCampaign extends Component {

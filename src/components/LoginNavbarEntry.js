@@ -31,7 +31,7 @@ export default class LoginNavbarEntry extends React.Component {
             </NavItem>
             <Popover target="loginPopoverLink" placement="bottom" isOpen={this.state.loginPopoverOpen}>
                 <PopoverHeader> Login </PopoverHeader>
-                <PopoverBody><LoginForm onLogin={this.onLogin}/></PopoverBody>
+                <PopoverBody><LoginForm/></PopoverBody>
             </Popover>
             </div>
         );

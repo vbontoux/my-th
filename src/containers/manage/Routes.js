@@ -6,7 +6,7 @@ import e404 from "../e404";
 import CreateCampaign from "./CreateCampaign";
 import ManageCampaign from "./ManageCampaign";
 import ManageCampaignHome from "./ManageCampaignHome";
-import {CampaignStartList} from "../../Campaign";
+import {CampaignStartList} from "classes/Campaign";
 
 class Routes extends Component {
     render() {

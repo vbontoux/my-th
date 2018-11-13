@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Col, FormGroup, Input, Label, Row} from "reactstrap";
-import Information from "../../components/Information";
+import Information from "components/Information";
 
-import CollapsibleTitle from "../../components/CollapsibleTitle";
+import CollapsibleTitle from "components/CollapsibleTitle";
 import {typeEnumToOption} from "./CampaignForm";
-import {GameSettings, GameTypes} from "../../Campaign";
+import {GameSettings, GameTypes} from "classes/Campaign";
 import PrizesFields from "./PrizesFields";
 
 const gameType = ["Concours", "Tirage au sort", "Instants gagnants"];

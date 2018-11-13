@@ -4,7 +4,7 @@ import {mdiWorker} from "@mdi/js";
 
 import "../../styles/utils.css"
 import ListCampaigns from "./List Campaigns";
-import {CampaignStartList} from "../../Campaign";
+import {CampaignStartList} from "../../classes/Campaign";
 
 class ManageCampaignHome extends Component {
     render() {

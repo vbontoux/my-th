@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Prize} from "../../Campaign";
+import {Prize} from "classes/Campaign";
 import PrizeFields from "./PrizeFields";
-import CollapsibleTitle from "../../components/CollapsibleTitle";
+import CollapsibleTitle from "components/CollapsibleTitle";
 import {Button} from "reactstrap";
 import {Icon} from '@mdi/react'
 import {mdiPlusCircle} from "@mdi/js";

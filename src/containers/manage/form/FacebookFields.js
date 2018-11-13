@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {FacebookSettings} from "../../Campaign";
+import {FacebookSettings} from "classes/Campaign";
 import {Col, CustomInput, FormFeedback, FormGroup, Input, Label, Row} from "reactstrap";
-import CollapsibleTitle from "../../components/CollapsibleTitle";
+import CollapsibleTitle from "components/CollapsibleTitle";
 import {areImage, ImageFieldInfos} from "./CampaignForm";
 
 class FacebookFields extends Component {

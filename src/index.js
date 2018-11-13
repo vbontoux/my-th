@@ -3,11 +3,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router} from 'react-router-dom'
 import Amplify from "aws-amplify";
-import config from "./config"
+import {createStore} from "redux";
+import {Provider} from "react-redux";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
+import config from "./config"
 import App from './App';
+import reducer from './reducers'
+
+
+const store = createStore(reducer);
 
 Amplify.configure({
     Auth: {
@@ -37,7 +43,7 @@ class DebugRouter extends Router {
     }
 }
 
-ReactDOM.render(<DebugRouter><App/></DebugRouter>, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}><DebugRouter><App/></DebugRouter></Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

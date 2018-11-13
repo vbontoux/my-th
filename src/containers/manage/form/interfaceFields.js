@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {InterfaceSettings, InterfaceTypes} from "../../Campaign";
+import {InterfaceSettings, InterfaceTypes} from "classes/Campaign";
 import FacebookFields from "./FacebookFields";
-import CollapsibleTitle from "../../components/CollapsibleTitle";
+import CollapsibleTitle from "components/CollapsibleTitle";
 
 class InterfaceFields extends Component {
 
