@@ -31,11 +31,6 @@ button div.spinner div {
     border-color: transparent;
 }
 
-.container-fluid {
-    max-width: 1280px;
-    margin: 0 auto;
-}
-
 hr {
     margin-top: auto;
     margin-bottom: auto;

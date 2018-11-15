@@ -1,39 +1,18 @@
 import React from "react";
 import {NavItem, NavLink, Popover, PopoverBody, PopoverHeader} from "reactstrap";
 import LoginForm from "./loginForm";
+import {urls} from "../config";
+import {Link} from "react-router-dom";
 
-export default class LoginNavbarEntry extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            loginPopoverOpen: false
-        }
+export default function (props) {
+    let url = urls.loginUrl;
+    if (props.next) {
+        url += props.next;
     }
-
-    toggleLoginPopover() {
-        this.setState({
-            loginPopoverOpen: !this.state.loginPopoverOpen
-        });
-    }
-
-    onLogin = (auth) => {
-        this.props.onLogin(auth);
-        //No need to hide, we unmount before
-    };
-
-    render() {
-        return (
-            <div>
-            <NavItem>
-                <NavLink id="loginPopoverLink" onClick={this.toggleLoginPopover.bind(this)}>Login</NavLink>
-            </NavItem>
-            <Popover target="loginPopoverLink" placement="bottom" isOpen={this.state.loginPopoverOpen}>
-                <PopoverHeader> Login </PopoverHeader>
-                <PopoverBody><LoginForm/></PopoverBody>
-            </Popover>
-            </div>
-        );
-    }
+    return (
+        <NavItem>
+            <Link to={url}>Login</Link>
+        </NavItem>
+    );
 }
+

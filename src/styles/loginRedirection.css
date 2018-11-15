@@ -1,0 +1,81 @@
+.loginRedirectionWrapper {
+    display: flex;
+    color: white;
+    background: rgba(169,208,124,1);
+    background: -moz-linear-gradient(-45deg, rgba(169,208,124,1) 0%, rgba(169,208,124,1) 5%, rgba(137,190,77,1) 27%, rgba(137,190,77,1) 51%, rgba(169,208,124,1) 71%, rgba(169,208,124,1) 100%);
+    background: -webkit-linear-gradient(-45deg, rgba(169,208,124,1) 0%, rgba(169,208,124,1) 5%, rgba(137,190,77,1) 27%, rgba(137,190,77,1) 51%, rgba(169,208,124,1) 71%, rgba(169,208,124,1) 100%);
+    background: -o-linear-gradient(-45deg, rgba(169,208,124,1) 0%, rgba(169,208,124,1) 5%, rgba(137,190,77,1) 27%, rgba(137,190,77,1) 51%, rgba(169,208,124,1) 71%, rgba(169,208,124,1) 100%);
+    background: -ms-linear-gradient(-45deg, rgba(169,208,124,1) 0%, rgba(169,208,124,1) 5%, rgba(137,190,77,1) 27%, rgba(137,190,77,1) 51%, rgba(169,208,124,1) 71%, rgba(169,208,124,1) 100%);
+    background: linear-gradient(135deg, rgba(169,208,124,1) 0%, rgba(169,208,124,1) 5%, rgba(137,190,77,1) 27%, rgba(137,190,77,1) 51%, rgba(169,208,124,1) 71%, rgba(169,208,124,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a9d07c', endColorstr='#a9d07c', GradientType=1 );
+}
+
+.wideHeader {
+    font-size: 2rem;
+    letter-spacing: .5em;
+    font-weight: bold;
+    font-style: italic;
+    margin-bottom: 2em;
+}
+
+.baitDisplay {
+    font-size: 4rem;
+    font-weight: 300;
+}
+
+.baitDisplay b {
+    font-weight: 600;
+}
+
+.description {
+    font-size: 1.5rem;
+
+}
+
+.bigRoundBtn {
+    border-radius: 1.75rem;
+    font-size: large;
+    box-sizing: border-box;
+    display: inline-block;
+    height: 3.5rem;
+    z-index: 2;
+    transition: font-weight .5s, background-color .5s;
+    margin: auto .5em;
+    box-shadow: none !important;
+}
+
+.bigRoundBtn span {
+    margin: auto 2em auto 2em;
+}
+
+.aboutBtn {
+    border-color: white !important;
+    border-width: medium !important;
+    background: transparent;
+}
+
+.aboutBtn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.aboutBtn {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.aboutBtn:active {
+    background: rgba(255, 255, 255, 0.5)!important;
+}
+
+
+
+
+.facebook {
+    background:  	#009ed0;
+    color: white;
+    border: none;
+    margin-left: 0;
+}
+
+.facebook:hover {
+    background: #0088b4;
+}

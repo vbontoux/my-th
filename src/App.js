@@ -14,6 +14,7 @@ import './styles/loginPopoverStyle.css'
 import UserNavItem from "./components/UserNavItem";
 import {connect} from "react-redux";
 import {stateToUserProps} from "./reducers/user";
+import DebugRouter from "./DebugRouter";
 
 
 class App extends Component {
@@ -21,7 +22,8 @@ class App extends Component {
         super(props);
 
         this.state = {
-            openedSidenav: false
+            openedSidenav: false,
+            isAuthenticating: true
         };
     }
 
@@ -63,28 +65,30 @@ class App extends Component {
     render() {
         return (
             !this.state.isAuthenticating &&
-            <div className="appWrapper" id="App">
-                <Navbar color="light" light expand="md">
-                    <Link to={"/"}>
-                        <img alt="logo my-TreasureHunt"
-                             src="https://my-treasurehunt.com/assets/images/logositethmaj2017-430x90.jpg"
-                             style={{maxHeight: "50px", margin: "none"}}/>
-                    </Link>
-                    <NavbarToggler onClick={() => {
-                        this.setState({openedSidenav: !this.state.openedSidenav});
-                    }}/>
-                    <Collapse navbar style={{paddingRight: "5em"}} isOpen={this.state.openedSidenav}>
-                        <Nav className="ml-auto main-navbar" navbar>
-                            <NavItem><Link to={"/"}>About us</Link></NavItem>
-                            <NavItem><Link to={"/manage"}>Manage your campaigns</Link></NavItem>
-                            <UserNavItem/>
-                        </Nav>
-                    </Collapse>
-                </Navbar>
-                <Routes match={this.props.match}/>
-            </div>
+            <DebugRouter>
+                <div className="appWrapper" id="App">
+                    <Navbar color="light" light expand="md">
+                        <Link to={"/"}>
+                            <img alt="logo my-TreasureHunt"
+                                 src="https://my-treasurehunt.com/assets/images/logositethmaj2017-430x90.jpg"
+                                 style={{maxHeight: "50px", margin: "none"}}/>
+                        </Link>
+                        <NavbarToggler onClick={() => {
+                            this.setState({openedSidenav: !this.state.openedSidenav});
+                        }}/>
+                        <Collapse navbar style={{paddingRight: "5em"}} isOpen={this.state.openedSidenav}>
+                            <Nav className="ml-auto main-navbar" navbar>
+                                <NavItem><Link to={"/"}>About us</Link></NavItem>
+                                <NavItem><Link to={"/manage"}>Manage your campaigns</Link></NavItem>
+                                <UserNavItem/>
+                            </Nav>
+                        </Collapse>
+                    </Navbar>
+                    <Routes match={this.props.match}/>
+                </div>
+            </DebugRouter>
         );
     }
 }
 
-export default withRouter(connect(stateToUserProps) (App));
+export default withRouter(connect(stateToUserProps)(App));

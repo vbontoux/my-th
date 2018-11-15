@@ -5,11 +5,12 @@ import {mdiWorker} from "@mdi/js";
 import "../../styles/utils.css"
 import ListCampaigns from "./List Campaigns";
 import {CampaignStartList} from "../../classes/Campaign";
+import {Container} from "reactstrap";
 
 class ManageCampaignHome extends Component {
     render() {
         return (
-            <div id="manageHome">
+            <Container id="manageHome" style={{marginTop: "2em"}}>
                 <ListCampaigns list={CampaignStartList}/>
                 <div>
                     <div className="test_text" style={{paddingTop: "100px"}}>
@@ -23,7 +24,7 @@ class ManageCampaignHome extends Component {
                         <Icon path={mdiWorker} size={4} color="#999" style={{opacity: 0.2}}/>
                     </div>
                 </div>
-            </div>
+            </Container>
         );
     }
 }
