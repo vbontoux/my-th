@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
 import Routes from './Routes'
 import {Auth} from 'aws-amplify'
-import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from 'reactstrap'
-import {Link} from "react-router-dom";
-
+import {Collapse, Nav, Navbar, NavbarToggler, NavItem} from 'reactstrap'
+import {Link, withRouter} from "react-router-dom";
 //Config
-import {urls, facebookAppID} from './config'
-
+import {facebookAppID, urls} from './config'
 //Perso
 import {store} from "./index";
-
 //CSS
 import './App.css';
 import './styles/utils.css'
@@ -90,4 +87,4 @@ class App extends Component {
     }
 }
 
-export default connect(stateToUserProps) (App);
+export default withRouter(connect(stateToUserProps) (App));

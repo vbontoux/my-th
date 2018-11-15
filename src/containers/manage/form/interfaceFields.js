@@ -19,7 +19,7 @@ class InterfaceFields extends Component {
                     break;
                 default:
                     ret.push(<CollapsibleTitle title={<h4>Paramètre de campagne {type.name}</h4>} key={type}
-                                               id={`field_${type}`}>TODO</CollapsibleTitle>)
+                                               id={`field_${type}`}>TODO</CollapsibleTitle>);
                     break;
             }
         });

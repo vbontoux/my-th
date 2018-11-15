@@ -29,7 +29,7 @@ class ListCampaigns extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.props.list.map(c => <ListTableEntry campaign={c}/>)}
+                    {this.props.list.map(c => <ListTableEntry campaign={c} key={c.id}/>)}
                     </tbody>
                 </Table>
             </div>
