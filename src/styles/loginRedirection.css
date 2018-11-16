@@ -1,6 +1,17 @@
 .loginRedirectionWrapper {
-    display: flex;
     color: white;
+    margin-top: 10rem;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.loginRedirectionBackgroud {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: -1;
     background: rgba(169,208,124,1);
     background: -moz-linear-gradient(-45deg, rgba(169,208,124,1) 0%, rgba(169,208,124,1) 5%, rgba(137,190,77,1) 27%, rgba(137,190,77,1) 51%, rgba(169,208,124,1) 71%, rgba(169,208,124,1) 100%);
     background: -webkit-linear-gradient(-45deg, rgba(169,208,124,1) 0%, rgba(169,208,124,1) 5%, rgba(137,190,77,1) 27%, rgba(137,190,77,1) 51%, rgba(169,208,124,1) 71%, rgba(169,208,124,1) 100%);
@@ -40,8 +51,12 @@
     height: 3.5rem;
     z-index: 2;
     transition: font-weight .5s, background-color .5s;
-    margin: auto .5em;
+    margin: 1em .5em auto .5em;
     box-shadow: none !important;
+}
+
+.bigRoundBtn svg {
+    margin-right: 1em;
 }
 
 .bigRoundBtn span {
@@ -55,11 +70,11 @@
 }
 
 .aboutBtn:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .aboutBtn {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .aboutBtn:active {
@@ -67,7 +82,11 @@
 }
 
 
+.facebook:disabled {
+    background:  	#dfe3ee !important;
+    color: #5a6268;
 
+}
 
 .facebook {
     background:  	#009ed0;
