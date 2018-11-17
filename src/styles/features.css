@@ -28,7 +28,7 @@ ul.features {
 
 .features > li {
     display: inline-block;
-    margin: 1em auto;
+    margin: .9em auto;
 }
 
 .title {
