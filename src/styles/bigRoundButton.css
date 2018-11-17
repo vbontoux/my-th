@@ -1,0 +1,19 @@
+.bigRoundBtn {
+    border-radius: 1.75rem;
+    font-size: large;
+    box-sizing: border-box;
+    display: inline-block;
+    height: 3.5rem;
+    z-index: 2;
+    transition: font-weight .5s, background-color .5s;
+    margin: 1em .5em auto .5em;
+    box-shadow: none !important;
+}
+
+.bigRoundBtn svg {
+    margin-right: 1em;
+}
+
+.bigRoundBtn span {
+    margin: auto 2em auto 2em;
+}

@@ -11,6 +11,8 @@ export default {
 
 export const facebookAppID = 2205143559520263;
 
+export const facebookFields = "public_profile, email, manage_pages, publish_pages";
+
 export const urls = {
     FacebookSDK: `https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v3.1&appId=${facebookAppID}&autoLogAppEvents=1`,
     getFbAvatar: (id) => {

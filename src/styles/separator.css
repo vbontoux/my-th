@@ -1,0 +1,6 @@
+hr.hSeparator {
+    margin: 0;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #bfbfbf, rgba(0, 0, 0, 0));
+}

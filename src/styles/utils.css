@@ -31,13 +31,6 @@ button div.spinner div {
     border-color: transparent;
 }
 
-hr {
-    margin-top: auto;
-    margin-bottom: auto;
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #bfbfbf, rgba(0, 0, 0, 0));
-}
 
 div.vr {
     margin-top: auto;

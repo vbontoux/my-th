@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ButtonSpinable from "./ButtonSpinable";
-import {urls} from "../config";
+import {facebookFields, urls} from "../config";
 import {Auth} from "aws-amplify";
 import connect from "react-redux/es/connect/connect";
 import {stateToUserProps} from "../reducers/user";
@@ -58,7 +58,7 @@ class LoginButton extends Component {
             else
                 console.debug("MTH - Facebook recieved response", r);
             this.callErrorHandler(r);
-        }, {fields: "public_profile, email"});
+        }, {fields: facebookFields});
     };
 
     setConnecting(bool = false) {
