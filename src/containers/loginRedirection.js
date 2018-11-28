@@ -5,6 +5,8 @@ import {Icon} from '@mdi/react'
 import {mdiFacebook} from '@mdi/js'
 
 import "../styles/loginRedirection.css"
+import "../styles/bigRoundButton.css"
+
 import ButtonSpinable from "../components/ButtonSpinable";
 import {Button} from "reactstrap";
 import {Link, withRouter} from "react-router-dom";
@@ -54,7 +56,7 @@ class LoginRedirection extends Component {
                                 <Button className={"bigRoundBtn facebook"} disabled><span><Icon path={mdiFacebook}
                                                                                                 size={1}/> You are already logged in</span></Button>
                             }
-                            <Link to={"/"}><Button
+                            <Link to={"/features"}><Button
                                 className={"bigRoundBtn aboutBtn"}><span>Learn more</span></Button></Link>
                         </Row>
                     </Container>
