@@ -1,20 +1,23 @@
-import React from "react"
-import {Icon} from "@mdi/react"
-import {mdiFacebook} from "@mdi/js"
-import {Auth} from "aws-amplify";
-import {urls} from "../config"
-import {connect} from "react-redux";
-
+import React, {Component} from 'react';
 import ButtonSpinable from "./ButtonSpinable";
+import {urls} from "../config";
+import {Auth} from "aws-amplify";
+import connect from "react-redux/es/connect/connect";
 import {stateToUserProps} from "../reducers/user";
+import PropTypes from 'prop-types'
 
-export class LoginForm extends React.Component {
-
+class LoginButton extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            connecting: false
+            loading: false
+        }
+    }
+
+    callErrorHandler = (e) => {
+        if (this.props.error) {
+            this.props.error(e)
         }
     };
 
@@ -31,11 +34,14 @@ export class LoginForm extends React.Component {
             console.debug("[AWS_Cogn] Connection success.", credentials);
             this.setConnecting();
             Auth.currentAuthenticatedUser().then(user => {
-                this.props.dispatch({type: "LOGIN", userData: user})
-            });
+                this.props.dispatch({type: "LOGIN", userData: user});
+                if (this.props.success)
+                    this.props.success(user);
+            }).catch(e => this.callErrorHandler(e));
         }).catch(e => {
             console.error("[AWS_Cogn] " + e);
-            this.setConnecting()
+            this.setConnecting();
+            this.callErrorHandler(e);
         });
     };
 
@@ -51,27 +57,26 @@ export class LoginForm extends React.Component {
             }
             else
                 console.debug("MTH - Facebook recieved response", r);
+            this.callErrorHandler(r);
         }, {fields: "public_profile, email"});
     };
 
     setConnecting(bool = false) {
         this.setState({
-            connecting: bool
+            loading: bool
         })
     }
 
     render() {
+        const {final, ...nextProps} = this.props;
         return (
-            <div id="loginForm">
-                <ButtonSpinable color="primary" className="facebookButton" block
-                                loading={this.state.connecting}
-                                onClick={this.fbLogin}>
-                    <Icon path={mdiFacebook}
-                          size={1}/>
-                </ButtonSpinable>
-            </div>
+            <ButtonSpinable loading={this.state.loading} {...nextProps} onClick={this.fbLogin}>
+                {this.props.children}
+            </ButtonSpinable>
         );
     }
 }
 
-export default connect(stateToUserProps)(LoginForm);
+LoginButton.propTypes = {success: PropTypes.func, failure: PropTypes.func};
+
+export default connect(stateToUserProps)(LoginButton);

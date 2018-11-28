@@ -1,0 +1,9 @@
+tbody > tr > th {
+    vertical-align: middle !important;
+    line-height: inherit;
+}
+
+tbody > tr > td {
+    vertical-align: middle !important;
+    line-height: inherit;
+}

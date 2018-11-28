@@ -1,13 +1,15 @@
 import React from "react";
-import {NavItem, Button, NavLink} from "reactstrap";
-import {PulseLoader} from 'react-spinners'
-import {Popover, PopoverBody} from "reactstrap";
+import {NavItem, NavLink, Popover, PopoverBody} from "reactstrap";
 import {Icon} from '@mdi/react'
 import {mdiExitRun} from '@mdi/js'
+import {Auth} from 'aws-amplify'
 
 import '../styles/utils.css'
+import ButtonSpinable from "./ButtonSpinable";
+import connect from "react-redux/es/connect/connect";
+import {stateToUserProps} from "../reducers/user";
 
-export default class LoginNavbarEntry extends React.Component {
+export class AccountNavbarEntry extends React.Component {
 
     constructor(props) {
         super(props);
@@ -18,9 +20,20 @@ export default class LoginNavbarEntry extends React.Component {
         }
     }
 
+    logoutHandler = async () => {
+        console.debug("[DEBUG] MTH - AWS Cognito: User logout.");
+        await Auth.signOut()
+            .then(() => {
+                this.props.dispatch({type: "LOGOUT"});
+            })
+            .catch(e => {
+                console.error(e);
+            });
+    };
+
     logOut() {
         this.setState({loggingOut: true});
-        this.props.onLogout()
+        this.logoutHandler();
     }
 
     toggleLoginPopover() {
@@ -30,27 +43,25 @@ export default class LoginNavbarEntry extends React.Component {
     }
 
     render() {
-
-        let icon = <div>Log out <Icon path={mdiExitRun} size={1} color={"#fff"} className={'right-icon'}/></div>;
-        if (this.state.loggingOut)
-            icon = <PulseLoader
-                sizeUnit={"em"}
-                size={0.4}
-                loading={true} className="spinner"/>;
         return (
             <div>
                 <NavItem>
                     <NavLink id="accountNavbarLink" onClick={this.toggleLoginPopover.bind(this)}>
-                        <img src={this.props.user.avatar} alt="avatar"
-                             className="avatarImage"/>{this.props.user.username}
+                        <img src={this.props.user.infos.avatar} alt="avatar"
+                             className="avatarImage"/>{this.props.user.infos.username}
                     </NavLink>
                 </NavItem>
                 <Popover target="accountNavbarLink" placement="bottom" isOpen={this.state.loginPopoverOpen}>
                     <PopoverBody>
-                        <Button onClick={this.logOut.bind(this)} className="logoutBtn" block>{icon}</Button>
+                        <ButtonSpinable onClick={this.logOut.bind(this)} className="logoutBtn" block loading={this.state.loggingOut}>
+                            <div>Log out <Icon path={mdiExitRun} size={1} color={"#fff"} className={'right-icon'}/>
+                            </div>
+                        </ButtonSpinable>
                     </PopoverBody>
                 </Popover>
             </div>
         );
     }
 }
+
+export default connect(stateToUserProps) (AccountNavbarEntry);
