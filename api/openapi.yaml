@@ -1,0 +1,185 @@
+openapi: 3.0.0
+info:
+  title: My TH API
+  description: My Treasure Hunt API [mytreasurehunt](https://http://my-treasurehunt.com/).
+  version: 0.1.0
+servers:
+  - url: http://api.mytreasurehunt.com/v1
+    description: Main server (production)
+  - url: http://staging-api.mytreasurehunt.com
+    description: Staging server
+paths:
+  /funbots:
+    get:
+      tags:
+        - Funbot      
+      summary: Gets funbot by id.
+      description: >
+        Get funbot's details
+      operationId: getFunbotById
+      parameters:
+        - name: uid
+          in: query
+          description: user ID
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/funbots'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '404':
+          $ref: '#/components/responses/badRequest'
+        '500':
+          $ref: '#/components/responses/error'
+  /funbots/{id}:
+    get:
+      tags:
+        - Funbot      
+      summary: Gets funbot by id.
+      description: >
+        Get funbot's details
+      operationId: getFunbotById
+      parameters:
+        - name: id
+          in: path
+          description: Funbot ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/funbot'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '404':
+          $ref: '#/components/responses/badRequest'
+        '500':
+          $ref: '#/components/responses/error'
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Gets a user by ID.
+      description: >
+        Get user's details with her subscription...
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '404':
+          $ref: '#/components/responses/badRequest'
+        '500':
+          $ref: '#/components/responses/error'
+    put:
+      tags:
+        - Users
+      summary: Create or update a user
+      description: Set user's details with subscription...
+      operationId: setUserById
+      parameters: 
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success     
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '500':
+          $ref: '#/components/responses/error'
+
+        
+components:
+  responses:
+    badRequest:
+      description: bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/status'    
+    error:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/status'    
+            
+  schemas:
+    funbots:
+      type: object
+      additionalProperties: true
+      properties:
+        funbots:
+          type: array
+          items:
+            $ref: '#/components/schemas/funbot'
+    funbot:
+      type: object
+      additionalProperties: true
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+      required:
+        - id
+        - userId
+    users:
+      type: object
+      additionalProperties: true
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/user'
+    user:
+      type: object
+      properties:
+        id:
+          type: string
+        subscriptionId:
+          type: string
+        facebookId:
+          type: object
+      required:
+        - id
+        - subscription
+    status:
+      type: object
+      properties:
+        resourceId:
+          type: string
+        resourceName:
+          type: string
+        status:
+          type: string
+        statusDetails:
+          type: string
+
+        
